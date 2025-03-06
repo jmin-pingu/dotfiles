@@ -14,6 +14,6 @@ copy:
 	@cp ~/bin/chth ./chth
 
 write:
-	@cp -R ./.config/sioyek ~/.config/sioyek 
+	@cp -R ./.config/ ~/.config/
 	@cp -R ./.vimrc ~/.vimrc
 	@cp -R ./chth ~/bin/chth
