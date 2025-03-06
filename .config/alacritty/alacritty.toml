@@ -1,0 +1,79 @@
+[terminal.shell]
+program = "/bin/zsh"
+
+[cursor.style]
+blinking = "On"
+ 
+[cursor.vi_mode_style]
+blinking = "Never"
+
+[cursor]
+blink_interval = 450
+
+[window.padding]
+x = 6
+y = 2
+
+[colors.cursor]
+text = "#AAACAF"
+cursor = "#4D5368"
+
+[colors.vi_mode_cursor]
+text = "#AAACAF"
+cursor = "#4D5368"
+
+[colors.bright]
+black = "#252932"
+red = "#964C53"
+green = "#738A5C"
+yellow = "#C7B07E"
+blue = "#5A6C81"
+magenta = "#7F687D"
+cyan = "#677F7F"
+white = "#AAACAF"
+
+[colors.normal]
+black = "#242730"
+red = "#BE606C"
+green = "#8DBD6B"
+yellow = "#E5C07B"
+blue = "#8AA4C5"
+magenta = "#C09EBD"
+cyan = "#8AB9C1"
+white = "#D6D6D6"
+
+[colors.primary]
+background = "#000000"
+foreground = "#D6D6D6"
+
+[font]
+size = 20.0
+
+[font.normal]
+family = "MesloLGS Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "MesloLGS Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "MesloLGS Nerd Font"
+style = "Italic"
+
+[window]
+dynamic_title = true
+
+[window.dimensions]
+columns = 120
+lines = 35
+
+[scrolling]
+history=0
+
+[keyboard]
+bindings = [	
+{key="Right", mods="Alt", chars="\u001BF"},
+{key="Left", mods="Alt", chars="\u001BB"},
+]
+

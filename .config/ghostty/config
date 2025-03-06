@@ -1,0 +1,32 @@
+theme ="vesper"
+background = 000000
+foreground = D6D6D6
+cursor-color = 4D5368
+selection-background = D6D6D6
+selection-foreground = 000000
+
+# scrollback
+scrollback-limit = 0
+
+# font
+font-family = "MesloLGS Nerd Font Mono"
+font-size = 25
+
+# shell
+shell-integration-features = no-cursor
+
+# cursor
+cursor-style = block
+cursor-style-blink = true
+
+# keybindings
+keybind = command+d=ignore
+keybind = command+[=ignore
+keybind = command+]=ignore
+keybind = command+t=ignore
+keybind = command+shift+d=ignore
+keybind = shift+command+enter=ignore
+keybind = option+command+up=ignore
+keybind = option+command+left=ignore
+keybind = option+command+right=ignore
+keybind = option+command+down=ignore
