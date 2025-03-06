@@ -1,0 +1,64 @@
+#!/bin/bash
+
+THEMES=(
+	"twilight:twilight256,min-default"
+	"nord:nord,nord"
+	"neon:rdark-terminal2,electron-highlighter"
+	"habamax:habamax,iTerm2 Tango Dark"
+	"teen-titans:minimalist,vesper"
+	"depression:mies,Apple Classic"
+)
+	
+# first check for -themes option
+for argv in $@; do
+	if [[ $argv = "-themes" ]]; then
+		echo "Themes:"
+		for theme in "${THEMES[@]}" ; do
+			echo -e '\t'$theme
+		done
+		exit 0
+	fi
+done
+
+# otherwise, ensure that there is only one argument
+if [[ $# -ne 1 ]]; then
+	echo "error: usage chth [theme]"
+	echo "use -themes to list available themes"
+	exit 1	
+fi
+
+FOUND=0
+for theme in "${THEMES[@]}" ; do
+    KEY=${theme%%:*}
+	if [[ "$KEY" = $1 ]]; then
+    	VALUE=${theme#*:}
+		FOUND=1
+		break
+	fi
+done
+
+if [[ $FOUND = 0 ]]; then
+	echo "error: theme \"$1\" not found"
+	echo "use -themes to list available themes"
+	exit 1
+fi
+
+# proceed as usual
+VIM_THEME=${VALUE%%,*}
+GHOSTTY_THEME=${VALUE#*,}
+
+LINE_NUM_SCRIPT='sed "s/^\([0-9]*\)\:\(.*\)/\1/"'
+CONTENT_SCRIPT='sed "s/^\([0-9]*\)\:\(.*\)/\2/"'
+
+VIMRC_OUT=$(cat ~/.vimrc | grep -n "^colorscheme")
+GHOSTTY_OUT=$(cat ~/.config/ghostty/config | grep -n "^theme" )
+
+sed -i -e "$(echo $VIMRC_OUT | eval $LINE_NUM_SCRIPT)s/.*/$(echo $VIMRC_OUT | eval $CONTENT_SCRIPT | sed "s/^\(colorscheme\) \(.*$\)/\1 $VIM_THEME/g" )/" ~/.vimrc
+sed -i -e "$(echo $GHOSTTY_OUT | eval $LINE_NUM_SCRIPT)s/.*/$(echo $GHOSTTY_OUT | eval $CONTENT_SCRIPT | sed "s/^\(.*\=\)\(.*$\)/\1\"$GHOSTTY_THEME\"/g" )/" ~/.config/ghostty/config
+
+# double-check ghostty config is working appropriately
+ghostty +validate-config
+
+echo "vim-theme: $VIM_THEME, ghostty-theme: $GHOSTTY_THEME"
+echo "make sure to refresh ghostty: [CMD+SHIFT+,]"
+
