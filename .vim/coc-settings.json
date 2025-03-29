@@ -5,11 +5,48 @@
 			"filetypes": ["dockerfile"],
 			"args": ["--stdio"]
 		},
+		"haskell": {
+			"command": "haskell-language-server-wrapper",
+			"args": ["--lsp"],
+			"rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+			"filetypes": ["haskell", "lhaskell"],
+			"settings": {
+				"haskell": {
+					"checkParents": "CheckOnSave",
+					"checkProject": true,
+					"maxCompletions": 40,
+					"formattingProvider": "ormolu",
+					"plugin": {
+						"stan": { "globalOn": true }
+					}
+				}
+			}
+		},
+		"ocaml": {
+			"command": "ocamllsp",
+			"args": ["--stdio"],
+			"filetypes": ["ocaml", "reason"]
+		},
+		"sql": {
+			"command": "sql-language-server",
+			"args": ["up", "--method", "node-ipc"],
+			"filetypes": ["sql", "mysql"]
+		},
+		"zig": {
+		  "command": "zls",
+		  "filetypes": [
+		    "zig"
+		  ]
+		},
 		"dockercompose": {
 			"command": "docker-compose-langserver",
 			"args": ["--stdio"],
 			"filetypes": ["dockercompose"],
 			"rootPatterns": [".git", ".env", "docker-compose.yml", "compose.yml"]
+		},
+		"erlang": {
+			"command": "erlang_ls",
+			"filetypes": ["erlang"]
 		}
 	}
 }

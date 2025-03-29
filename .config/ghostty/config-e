@@ -1,4 +1,4 @@
-theme ="electron-highlighter"
+theme ="Apple Classic"
 background = 000000
 foreground = D6D6D6
 cursor-color = 4D5368
@@ -10,7 +10,7 @@ scrollback-limit = 0
 
 # font
 font-family = "MesloLGS Nerd Font Mono"
-font-size = 25
+font-size = 16
 
 # shell
 shell-integration-features = no-cursor

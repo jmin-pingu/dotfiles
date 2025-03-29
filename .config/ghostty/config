@@ -10,7 +10,7 @@ scrollback-limit = 0
 
 # font
 font-family = "MesloLGS Nerd Font Mono"
-font-size = 25
+font-size = 16
 
 # shell
 shell-integration-features = no-cursor

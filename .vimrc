@@ -12,7 +12,6 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'https://github.com/ap/vim-css-color'
 Plug 'https://github.com/romainl/vim-cool'
-Plug 'https://github.com/jalvesaq/Nvim-R'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 " Go Plugins
@@ -31,9 +30,6 @@ call plug#end()
 " NAV: nav-filetypes
 au BufNewFile,BufRead *.tutor set filetype=tutor
 au BufNewFile,BufRead *.templ set filetype=templ
-
-
-set rtp^="/Users/jmin/.opam/default/share/ocp-indent/vim"
 
 " NAV: nav-colorscheme
 " TODO: need to actually apply these to the original colorscheme file
@@ -140,7 +136,6 @@ colorscheme minimalist
 " Map the leader key
 " NAV: nav-leader
 let g:mapleader=" "
-let g:maplocalleader = ","
 
 "LEARNING: ------ {{{
 
@@ -205,11 +200,20 @@ nnoremap <leader>cp <esc>vip"*y
 
 nnoremap <leader>v <esc>"*p
 
+function ChangeDim()
+	let axis = input("H or V: ")
+	let amount = input("amount: ")
+	if axis ==? "v"
+		execute "vertical resize " . amount 
+	elseif axis ==? "h"
+		execute "horizontal resize " . amount 
+	else 
+	 	echom "incorrect dimensions for ChangeDim()"
+	endif
+endfunction
+
 " Mappings for window resizing
-nnoremap <leader>rl <C-w>>
-nnoremap <leader>rj <C-w>+
-nnoremap <leader>rk <C-w>-
-nnoremap <leader>rh <C-w><
+nnoremap <leader>rw :call ChangeDim()<CR>
 
 " Mappings for window nav
 nnoremap <leader>wl <C-w>l
@@ -245,9 +249,6 @@ nnoremap <leader>(w viw<esc>a)<esc>bi(<esc>lel
 nnoremap <leader>[w viw<esc>a]<esc>bi[<esc>lel
 nnoremap <leader>{w viw<esc>a}<esc>bi{<esc>lel
 nnoremap <leader><w viw<esc>a><esc>bi<<esc>lel
-
-" Allow for quick exitting of terminal mode
-tnoremap <Esc> <C-\><C-n>
 
 " clear the highlighting of :set hl earch.
 if maparg('<C-L>', 'n') ==# ''
@@ -586,24 +587,21 @@ augroup htmlgroup
 	autocmd FileType templ,html inoremap <leader>ne <esc>:call NewHTMLElem()<CR>
 augroup end
 
+" *.cpp
+" NAV: nav-augroup-cpp
+augroup cppgroup
+	" compile: 
+	autocmd FileType cpp set tabstop=2 shiftwidth=2
+augroup end
+
+
+
 " *.zig
 " NAV: nav-augroup-zig
 augroup ziggroup
 	" compile: 
 	autocmd FileType zig nnoremap <leader>ru :execute "!zig build run"<CR>
 	autocmd FileType zig nnoremap <leader>bu :execute "!zig build"<CR>
-augroup end
-
-" *.r
-" NAV: nav-augroup-r
-augroup rgroup
-	autocmd FileType r set shiftwidth=2 tabstop=2
-augroup end
-
-" *.cpp
-" NAV: nav-augroup-cpp
-augroup cppgroup
-	autocmd FileType cpp set shiftwidth=2 tabstop=2
 augroup end
 
 " *.rs
@@ -820,6 +818,10 @@ let g:go_info_mode='gopls'
 let g:go_doc_keywordprg_enabled = 0
 "}}}
 
+" OpamLsp Config
+let g:opamshare = substitute(system('opam var share'),'\n$','','''')
+     execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
 " CocConfig ----------------------------- {{{
 " https://raw.githubusercontent.com/neoclide/coc.nvim/master/doc/coc-example-config.vim
 " NAV: nav-cocconfig
@@ -831,14 +833,14 @@ function! ToggleCoc()
    if s:coc_enabled == 0
       let s:coc_enabled = 1
       CocStart
-      echo 'COC on'
+      echo 'coc on'
    else
       let s:coc_enabled = 0
-      echo 'COC off'
+      echo 'coc off'
       call coc#rpc#stop()
    endif
 endfunction
-nnoremap <silent> <leader>h :call ToggleCoc()<cr>
+nnoremap <silent> <leader>coc :call ToggleCoc()<cr>
 
 au FileType yaml if bufname("%") =~# "docker-compose.yml" | set ft=yaml.docker-compose | endif
 au FileType yaml if bufname("%") =~# "compose.yml" | set ft=yaml.docker-compose | endif

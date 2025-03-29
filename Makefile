@@ -6,10 +6,12 @@ copy:
 	echo "copying ~/.config/alacritty"
 	@cp -R ~/.config/alacritty ./.config/
 	echo "copying ~/.config/coc"
-	@cp -R ~/.config/coc ./.config/
+	@mkdir -p ./.config/coc/extensions
+	@cp -R ~/.config/coc/extensions/package.json ./.config/coc/extensions
 	echo "copying ~/.config/gh"
 	@cp -R ~/.config/gh ./.config/
 	echo "copying ~/.config/sioyek"
+	@mkdir -p ./.config/sioyek
 	@cp  ~/.config/sioyek/*.config ./.config/sioyek
 	echo "copying ~/.vim/*.json"
 	@cp  ~/.vim/coc-settings.json ./.vim/coc-settings.json
