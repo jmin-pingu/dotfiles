@@ -2,6 +2,7 @@
 " NAV: nav-plug
 call plug#begin('~/.vim/plugged')
 " Use release branch (recommended)
+Plug 'tikhomirov/vim-glsl'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
@@ -187,7 +188,7 @@ endfunction
 nnoremap <leader>sf :w<CR>
 
 " open nerdtree
-nnoremap <F7> :NERDTreeToggle<CR>
+nnoremap <leader>dir :NERDTreeToggle<CR>
 
 " Quick edit of $MYVIMRC
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -206,10 +207,10 @@ nnoremap <leader>cp <esc>vip"*y
 nnoremap <leader>v <esc>"*p
 
 " Mappings for window resizing
-nnoremap <leader>rl <C-w>>
 nnoremap <leader>rj <C-w>+
 nnoremap <leader>rk <C-w>-
-nnoremap <leader>rh <C-w><
+nnoremap <leader>rl <C-w><
+nnoremap <leader>rh <C-w>>
 
 " Mappings for window nav
 nnoremap <leader>wl <C-w>l
@@ -220,6 +221,14 @@ nnoremap <leader>wh <C-w>h
 " Mappings for quick comments like and other things 
 nnoremap <leader>td iTODO: <esc><Plug>CommentaryLine<esc>A
 nnoremap <leader>nt iNOTE: <esc><Plug>CommentaryLine<esc>A
+nnoremap <leader>qna iQUESTION: <esc>
+	\oANSWER: <esc>
+	\Vk
+  	\<Plug>Commentary<esc>A
+
+" Open Terminal (close with <C-d)
+nnoremap <leader>ot :terminal<CR>
+tnoremap <leader>et <C-w>N:q!<CR>
 
 " Strong Beginning and End of Line 
 nnoremap H 0
@@ -228,10 +237,11 @@ nnoremap L $
 nnoremap J 20j
 nnoremap K 20k
 
-" Toggle Folds 
-nnoremap <leader><F1> za
 
-" upper case a world while in normal mode
+" fold settings ("fp -> fold paper")
+nnoremap <leader>fp za
+
+" upper case a word while in normal mode
 nnoremap <leader>u viwoU<esc>e
 
 " source vimrc
@@ -255,12 +265,41 @@ if maparg('<C-L>', 'n') ==# ''
 endif
 
 " substitute the current word
+function! Substitute()
+	let regexp = input('regex: ')
+	let sub = input('sub: ')
+	execute ":%s/" . regexp . "/" . sub . "/g"
+endfunction
+nnoremap <leader>gsu :call Substitute()<CR>
+
+" substitute the current word
+function! SafeSubstitute()
+	let regexp = input('regex: ')
+	let sub = input('sub: ')
+	execute ":%s/" . regexp . "/" . sub . "/gc"
+endfunction
+nnoremap <leader>ssu :call SafeSubstitute()<CR>
+
+" substitute the current word
 function! SubstituteCword()
 	let src = expand('<cword>')
-	let sub = input('substitution: ')
+	let sub = input('sub: ')
 	execute ":%s/" . src . "/" . sub . "/g"
 endfunction
-nnoremap <leader>sub :call SubstituteCword()<CR>
+nnoremap <leader>wsu :call SubstituteCword()<CR>
+
+function! SubstituteVisual()
+	let old_reg = @"
+	normal! gvy
+	let src = @"
+	let @" = old_reg
+	let sub = input('sub: ')
+	execute "%s/" . src . "/" . sub . "/g"
+endfunction
+vnoremap <leader>vsu :<C-u>call SubstituteVisual()<CR>
+
+nnoremap <leader>rw "_diwP  " Replace word under cursor
+vnoremap <leader>p "_dP      " Replace visual selection
 
 " buffer-nav
 " jump to specific buffer
@@ -294,6 +333,15 @@ inoremap <C-u> <esc>lviwoU<esc>lel
 
 " lower case a word while in insert mode
 inoremap <C-l> <esc>lviwou<esc>lel
+
+" lower case a word while in insert mode
+inoremap <C-w>" <esc>viw<esc>a"<esc>bi"<esc>lelli
+inoremap <C-w>' <esc>viw<esc>a'<esc>bi'<esc>lelli
+inoremap <C-w>` <esc>viw<esc>a`<esc>bi`<esc>lelli
+inoremap <C-w>( <esc>viw<esc>a)<esc>bi(<esc>lelli
+inoremap <C-w>[ <esc>viw<esc>a]<esc>bi[<esc>lelli
+inoremap <C-w>{ <esc>viw<esc>a}<esc>bi{<esc>lelli
+inoremap <C-w>< <esc>viw<esc>a><esc>bi<<esc>lelli
 
 " delete line in insert mode
 inoremap <C-d> <esc>ddi
@@ -329,6 +377,7 @@ endfunction
 vnoremap <leader>su :call Wrap()<CR>
 vnoremap "" <esc>`>a"<esc>`<i"<esc>b
 vnoremap '' <esc>`>a'<esc>`<i'<esc>b
+vnoremap `` <esc>`>a`<esc>`<i`<esc>b
 vnoremap (( <esc>`>a)<esc>`<i(<esc>b
 vnoremap [[ <esc>`>a]<esc>`<i[<esc>b
 vnoremap {{ <esc>`>a}<esc>`<i{<esc>b
@@ -426,6 +475,7 @@ set backspace=indent,eol,start
 " Modify this depending on file type
 set shiftwidth=4
 set tabstop=4
+set expandtab
 
 " Set indentation to be automatic 
 set autoindent
@@ -497,22 +547,20 @@ set hlsearch
 
 " Highlight Config ----------------------------------------------------------- {{{
 " NAV: nav-highlight
-highlight CursorLineNr cterm=Bold 
+highlight CursorLineNr cterm=Bold ctermbg=235
+highlight CursorLine cterm=NONE ctermbg=235
 
 " Change highlight groups
-highlight Todo ctermbg=NONE cterm=Bold ctermfg=11
+highlight Todo ctermbg=NONE cterm=Bold,underline ctermfg=11
+highlight Important ctermbg=NONE cterm=underline,bold ctermfg=123
 highlight Error ctermbg=NONE cterm=Bold ctermfg=9 ctermbg=NONE
 highlight ErrorMsg ctermfg=0
 
 " Change parenthesis matching
-highlight MatchParen ctermbg=NONE cterm=Bold,Underline ctermfg=4
+highlight MatchParen ctermbg=None cterm=Underline,Bold ctermfg=4
 
 " Change normal font color
 highlight Normal ctermbg=NONE
-
-" Highlight cursor line underneath the cursor vertically.
-highlight CursorLine cterm=NONE
-" To edit the cursor color, do it in shell settings
 
 highlight VertSplit cterm=bold ctermbg=NONE ctermfg=NONE
 highlight HoriSplit cterm=bold ctermbg=NONE ctermfg=NONE
@@ -541,11 +589,14 @@ highlight Visual cterm=NONE
 " Search settings
 highlight CurSearch cterm=bold 
 
-" augroup syntaxHighlighting
-" 	autocmd!
-" 	autocmd Syntax * syntax keyword CommentMarker ISSUE NOTE contained
-" 	autocmd Syntax * syntax match Comment contains=Todo
-" augroup end
+
+augroup syntax
+	autocmd!
+	autocmd BufWritePost,BufRead,BufNewFile * syntax keyword Important NOTE containedin=.*Comment.*,vimCommentTitle,cCommentL
+	autocmd BufWritePost,BufRead,BufNewFile * syntax keyword Important KEY containedin=.*Comment.*,vimCommentTitle,cCommentL
+	autocmd BufWritePost,BufRead,BufNewFile * syntax keyword Important QUESTION containedin=.*Comment.*,vimCommentTitle,cCommentL
+	autocmd BufWritePost,BufRead,BufNewFile * syntax keyword Important ANSWER containedin=.*Comment.*,vimCommentTitle,cCommentL
+augroup end
 " }}}
 
 " Custom Highlight Groups ----------------------------------------------------------- {{{
@@ -586,11 +637,18 @@ augroup htmlgroup
 	autocmd FileType templ,html inoremap <leader>ne <esc>:call NewHTMLElem()<CR>
 augroup end
 
+
 " *.cpp
 " NAV: nav-augroup-cpp
+function! ExecuteViaCmake()
+	let elem = input('bin: ')
+	execute "!fcmake " . elem
+endfunction
+"
 augroup cppgroup
 	" compile: 
 	autocmd FileType cpp set tabstop=2 shiftwidth=2
+	autocmd FileType cpp nnoremap <leader>ru :call ExecuteViaCmake()<CR>
 augroup end
 
 
@@ -600,7 +658,11 @@ augroup end
 augroup ziggroup
 	" compile: 
 	autocmd FileType zig nnoremap <leader>ru :execute "!zig build run"<CR>
+	autocmd FileType zig nnoremap <leader>de :execute "!zig build run -freference-trace=12"<CR>
 	autocmd FileType zig nnoremap <leader>bu :execute "!zig build"<CR>
+	autocmd FileType zig nnoremap <leader>te :execute "!zig test " . @%<CR>
+	autocmd FileType zig nnoremap <leader>wasm :execute "!zig build-exe " . @% .  " -target wasm32-wasi"<CR>
+
 augroup end
 
 " *.r
@@ -609,10 +671,38 @@ augroup rgroup
 	autocmd FileType r set shiftwidth=2 tabstop=2
 augroup end
 
+" *.nix
+" NAV: nav-augroup-nix
+augroup nixgroup
+	autocmd FileType nix set shiftwidth=2 tabstop=2
+augroup end
+
+" *.cmake
+" NAV: nav-augroup-cmake
+augroup cmakegroup
+	autocmd FileType cmake set shiftwidth=2 tabstop=2
+augroup end
+
 " *.cpp
 " NAV: nav-augroup-cpp
 augroup cppgroup
 	autocmd FileType cpp set shiftwidth=2 tabstop=2
+augroup end
+
+" *.go
+" NAV: nav-augroup-go
+augroup gogroup
+	" compile: 
+	autocmd FileType go nnoremap <leader>ru :execute "!go run " . @% <CR>
+	autocmd FileType go nnoremap <leader>ma :execute "!make Makefile"<CR>
+augroup end
+
+" *.hs
+" NAV: nav-augroup-haskell
+augroup haskellgroup
+	" compile: 
+	autocmd FileType haskell set shiftwidth=2 tabstop=2
+	autocmd FileType haskell nnoremap <leader>ru :execute "!ghci " . @% <CR>
 augroup end
 
 " *.rs
@@ -621,6 +711,14 @@ augroup rustgroup
 	" compile: 
 	autocmd FileType rust nnoremap <leader>ru :execute "!cargo run"<CR>
 	autocmd FileType rust nnoremap <leader>bu :execute "!cargo build"<CR>
+	autocmd FileType rust nnoremap <leader>te :execute "!cargo test"<CR>
+augroup end
+
+" *.lua
+" NAV: nav-augroup-lua
+augroup luagroup
+	" compile: 
+	autocmd FileType lua nnoremap <leader>ru :execute "!lua " . @% <CR>
 augroup end
 
 " *.tex
@@ -632,18 +730,33 @@ function! NewEnvironment()
 	call feedkeys('i')
 endfunction
 
+function! ExecuteMainLatexDoc()
+	let dir = "."
+	let file = ""
+	" Assert that file is 
+	while (len(file) == 0)
+		let file = system("grep --exclude='*/.*' -rl \\begin{document} " . dir)
+		let dir = "../" . dir  
+	endwhile
+	execute "!pdflatex " . file
+endfunction
+
 augroup texgroup
 	autocmd!
 	" abbreviations for faster latex
+	autocmd FileType plaintex,tex :iabbrev <buffer> pow ^{}<esc>i<c-r>=Eatchar('\s')<cr>
+	autocmd FileType plaintex,tex :iabbrev <buffer> tt \text{}<esc>i<c-r>=Eatchar('\s')<cr>
 	autocmd FileType plaintex,tex :iabbrev <buffer> tit \textit{}<esc>i<c-r>=Eatchar('\s')<cr>
 	autocmd FileType plaintex,tex :iabbrev <buffer> ttt \texttt{}<esc>i<c-r>=Eatchar('\s')<cr>
 	autocmd FileType plaintex,tex :iabbrev <buffer> tbf \textbf{}<esc>i<c-r>=Eatchar('\s')<cr>
 	autocmd FileType plaintex,tex :iabbrev <buffer> mca \mathcal{}<esc>i<c-r>=Eatchar('\s')<cr>
 	autocmd FileType plaintex,tex :iabbrev <buffer> mbb \mathbb{}<esc>i<c-r>=Eatchar('\s')<cr>
 	autocmd FileType plaintex,tex :iabbrev <buffer> mbf \mathbf{}<esc>i<c-r>=Eatchar('\s')<cr>
-
 	autocmd FileType plaintex,tex :iabbrev <buffer> mk $$<esc>i<c-r>=Eatchar('\s')<cr>
 	autocmd FileType plaintex,tex :iabbrev <buffer> dm $$$$<left><esc>i<c-r>=Eatchar('\s')<cr>
+	autocmd FileType plaintex,tex :iabbrev <buffer> st \{\}<esc>hi<c-r>=Eatchar('\s')<cr>
+	autocmd FileType plaintex,tex :iabbrev <buffer> pow ^{}<esc>hi<c-r>=Eatchar('\s')<cr>
+
 	autocmd FileType plaintex,tex :iabbrev <buffer> sl \<esc>a<c-r>=Eatchar('\s')<cr>
 	autocmd FileType plaintex,tex :iabbrev <buffer> @a \alpha
 	autocmd FileType plaintex,tex :iabbrev <buffer> @A \Alpha
@@ -672,17 +785,19 @@ augroup texgroup
 	autocmd FileType plaintex,tex :iabbrev <buffer> @r \rho
 	autocmd FileType plaintex,tex :iabbrev <buffer> @R \Rho
 	autocmd FileType plaintex,tex :iabbrev <buffer> @o \omega
-	autocmd FileType plaintex,tex :iabbrev <buffer> @O \Omeg
+	autocmd FileType plaintex,tex :iabbrev <buffer> @O \Omega
 	autocmd FileType plaintex,tex :iabbrev <buffer> @u \upsilon
 	autocmd FileType plaintex,tex :iabbrev <buffer> @U \Upsilon
+	autocmd FileType plaintex,tex :iabbrev <buffer> @i ^{-1}
 
 	" latex configuration
+	autocmd SourcePost,FileType plaintex,tex set noautoindent nocindent nosmartindent indentexpr=
 	autocmd SourcePost,FileType plaintex,tex set linebreak textwidth=100
 
  	" latex unique commands
 	autocmd FileType plaintex,tex nnoremap <leader>ne :call NewEnvironment()<CR>
 	" compile: 
-	autocmd FileType plaintex,tex nnoremap <leader>ru :execute "!pdflatex " . @%<CR>
+	autocmd FileType plaintex,tex nnoremap <leader>ru :call ExecuteMainLatexDoc()<CR>
 	" vgrep --no-git --no-less -l \begin{document} *.tex
 augroup end
  
@@ -709,13 +824,13 @@ augroup end
 " *.py
 " NOTE: function taken from https://stackoverflow.com/questions/64583892/execute-lines-of-python-script-in-vim
 
-python3 << EOL
-import vim
-def ExecuteSelectedLine(l1, l2):
-    for i in range(l1-1,l2):
-        print(">>" + vim.current.buffer[i])
-        exec(vim.current.buffer[i],globals())
-EOL
+" python3 << EOL
+" import vim
+" def ExecuteSelectedLine(l1, l2):
+"     for i in range(l1-1,l2):
+"         print(">>" + vim.current.buffer[i])
+"         exec(vim.current.buffer[i],globals())
+" EOL
 
 " NAV: nav-augroup-python
 augroup pythongroup
@@ -723,7 +838,7 @@ augroup pythongroup
 	autocmd FileType python :iabbrev <buffer> iff if:<esc>i
 	autocmd FileType python command! -range Run <line1>,<line2> python3 ExecuteSelectedLine(<line1>, <line2>)
 	" ru - run entire script
-	autocmd FileType python nnoremap <leader>ru :execute "!clear"<CR>:execute "!python3 %"<CR>
+	autocmd FileType python nnoremap <leader>ru :execute "!clear"<CR>:execute "!uv run " .  @% <CR>
 augroup end
 
 augroup mdgroup
@@ -891,23 +1006,43 @@ endfunction
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
+nnoremap <leader>dia :call CocDiagnostics()<CR>
 nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
 nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation
-nnoremap <leader> gd <Plug>(coc-definition)
-nnoremap <leader> gy <Plug>(coc-type-definition)
-nnoremap <leader> gi <Plug>(coc-implementation)
-nnoremap <leader> gr <Plug>(coc-references)
+nnoremap <leader>gd <Plug>(coc-definition)
+nnoremap <leader>gt <Plug>(coc-type-definition)
+nnoremap <leader>gi <Plug>(coc-implementation)
+nnoremap <leader>gr <Plug>(coc-references)
+nnoremap <silent> gx :call CocAction('openlink')<CR>
 
 " Use <leader>doc to show documentation in preview window
-nnoremap <leader>doc :call ShowDocumentation()<CR>
+nnoremap <leader>dn :call ShowDocumentationBuffer()<CR>
+nnoremap <leader>dp :call ShowDocumentationPreview()<CR>
 
-function! ShowDocumentation()
+nnoremap <leader>man :call Man()<CR>
+
+function! Man()
+	execute '!' . &keywordprg . " " . expand('<cword>')
+endfunction
+
+function! ShowDocumentationBuffer()
 	if CocAction('hasProvider', 'hover')
-		call CocActionAsync('doHover')
+		call CocActionAsync('doHover', 'preview')
+		call timer_start(100, { -> execute('wincmd P | resize 30')})
 	else
-		call feedkeys('K', 'in')
+		" call feedkeys('K', 'in')
+		execute '!' . &keywordprg . " " . expand('<cword>')
+	endif
+endfunction
+
+function! ShowDocumentationPreview()
+	if CocAction('hasProvider', 'hover')
+		call CocActionAsync('doHover', 'float')
+	else
+		" call feedkeys('K', 'in')
+		execute '!' . &keywordprg . " " . expand('<cword>')
 	endif
 endfunction
 
@@ -922,6 +1057,8 @@ nnoremap <leader>rn <Plug>(coc-rename)
 xnoremap <leader>f  <Plug>(coc-format-selected)
 nnoremap <leader>f  <Plug>(coc-format-selected)
 
+" TODO: a lot to do with coc customizability
+
 augroup mygroup
 	autocmd!
 	" Setup formatexpr specified filetype(s)
@@ -930,8 +1067,8 @@ augroup end
 
 " Applying code actions to the selected code block
 " Example: `<leader>aa` for current paragraph
-nnoremap <leader>a <Plug>(coc-codeaction-selected)
-xnoremap <leader>a <Plug>(coc-codeaction-selected)
+nnoremap <leader>aa <Plug>(coc-codeaction-selected)
+xnoremap <leader>aa <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying code actions at the cursor position
 nnoremap <leader>ac <Plug>(coc-codeaction-cursor)
@@ -941,9 +1078,9 @@ nnoremap <leader>as <Plug>(coc-codeaction-source)
 nnoremap <leader>qf <Plug>(coc-fix-current 
 
 " Remap keys for applying refactor code actions
-nnoremap <silent> <leader>re <Plug>(coc-codeaction-refactor)
-xnoremap <silent> <leader>re  <Plug>(coc-codeaction-refactor-selected)
-nnoremap <silent> <leader>re  <Plug>(coc-codeaction-refactor-selected)
+nnoremap <silent> <leader>ref <Plug>(coc-codeaction-refactor)
+xnoremap <silent> <leader>res <Plug>(coc-codeaction-refactor-selected)
+nnoremap <silent> <leader>res <Plug>(coc-codeaction-refactor-selected)
 
 " Map function and class text orrowbjects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server
@@ -969,7 +1106,7 @@ nnoremap <silent><nowait><expr> <Up> coc#float#has_scroll() ? coc#float#scroll(0
 command! -nargs=0 Format :call CocActionAsync('format')
 
 " Add `:Fold` command to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
