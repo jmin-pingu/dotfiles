@@ -9,6 +9,8 @@
     home.stateVersion = "25.05";
     programs.home-manager.enable = true;
 
+    programs.git.userEmail = "WORK_EMAIL_REMOVED";
+
     programs.zsh.shellAliases = {
         switch = "darwin-rebuild switch --flake $HOME/dotfiles/nix#work-mac";
         rebuild = "darwin-rebuild switch --flake $HOME/dotfiles/nix#work-mac";
