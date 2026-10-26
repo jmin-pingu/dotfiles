@@ -18,6 +18,12 @@
 - **My notes (read-only):** `~/Desktop/vaults/notes`. My Obsidian vault. Search it for context and link notes as sources. Never create, edit, move, or delete anything in it.
 - **Claude vault (read-write):** `~/.claude/vault`. Your knowledge base. Rules for it are below.
 
+## Dotfiles
+
+- **This file lives in dotfiles.** `~/.claude/CLAUDE.md` is a symlink. Edit the real file: `~/dotfiles/claude/.claude/CLAUDE.md`.
+- **Same for other linked config** (skills, hooks, nvim, zsh, nix). Edit it under `~/dotfiles`, not through the link.
+- **Commit after editing**, in `~/dotfiles`. Don't push unless I ask.
+
 ## Knowledge base (`~/.claude/vault`)
 
 **Check first.** Before researching something, search the vault. Reuse what's there instead of looking it up again.
