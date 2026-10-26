@@ -17,8 +17,8 @@
     # Mac-only aliases.
     programs.zsh = {
         shellAliases = {
-            switch = "darwin-rebuild switch --flake $HOME/dotfiles/nix#personal-mac";
-            rebuild = "darwin-rebuild switch --flake $HOME/dotfiles/nix#personal-mac";
+            switch = "sudo darwin-rebuild switch --flake $HOME/dotfiles/nix#personal-mac";
+            rebuild = "sudo darwin-rebuild switch --flake $HOME/dotfiles/nix#personal-mac";
             python = "python3";
             man = "/usr/bin/man";
         };
