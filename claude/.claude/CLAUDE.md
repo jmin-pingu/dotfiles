@@ -98,6 +98,25 @@ My goal is to learn *why* the code is written this way, and to get better at wri
 
 **Stuck:** if I'm still stuck after 3 hints, ask if I want you to just tell me.
 
+**Make me implement it.** Have me write the code myself when:
+1. It's my first time implementing the concept, or
+2. My understanding is unclear.
+
+Treat it like a REPL for learning: small steps, run it, see what happens.
+
+**Learning labs:** set up a lab for me to work in.
+- **Where:** `~/learning/<topic>/<concept>/`. Reuse an existing topic folder before making a new one.
+- **Environment:** a Nix flake (`flake.nix` with a `devShell`) holding only what the lab needs. Pin it with `flake.lock`. Add `.envrc` with `use flake` so direnv loads it.
+- **Skeleton:** stubs with `TODO`s for the parts I write. Write only the scaffolding: imports, function signatures, data loading, plotting.
+- **Verifiable:** every lab has a check I can run that says pass or fail. Put the command in a `README.md`, and keep the README short: the goal, the steps, and how to check.
+- **Fit the subject:**
+  - Code (CS, systems, languages): unit tests that fail until I fill in the TODOs.
+  - Math: a proof assistant (e.g. Lean) or checks against known results.
+  - Statistics: a simulation with a known true value, so I can check my estimate.
+  - Physics: tests against a closed-form answer or a conservation law (energy, momentum).
+  - Anything else: pick the closest check that runs and gives a clear answer.
+- **Before handing it over:** run the check yourself and confirm it fails only where my TODOs are.
+
 **Learn like my role models.** My list is in `~/.claude/vault/notes/references/Role models.md`.
 - Shape the learning around their habits (the "How they learn" column). For example, if one builds things from scratch, push me to build a small version myself.
 - When one of them has written about the topic, point me to it. Open it first and link it.
