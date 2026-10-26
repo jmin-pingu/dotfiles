@@ -1,27 +1,17 @@
-copy:
-	echo "copying ~/.vimrc"
-	@cp ~/.vimrc ./.vimrc
-	echo "copying ~/.config/ghostty"
-	@cp -R ~/.config/ghostty ./.config/
-	echo "copying ~/.config/alacritty"
-	@cp -R ~/.config/alacritty ./.config/
-	echo "copying ~/.config/coc"
-	@mkdir -p ./.config/coc/extensions
-	@cp -R ~/.config/coc/extensions/package.json ./.config/coc/extensions
-	echo "copying ~/.config/gh"
-	@cp -R ~/.config/gh ./.config/
-	echo "copying ~/.config/sioyek"
-	@mkdir -p ./.config/sioyek
-	@cp  ~/.config/sioyek/*.config ./.config/sioyek
-	echo "copying ~/.vim/*.json"
-	@cp  ~/.vim/coc-settings.json ./.vim/coc-settings.json
-	echo "copying ~/.tmux.conf"
-	@cp ~/.tmux.conf ./.tmux.conf
-	@cp ~/bin/chth ./chth
+# Stow packages: each dir mirrors $HOME and gets symlinked into it.
+PACKAGES := alacritty bin claude coc fish ghostty karabiner nvim sioyek tex tmux vim yazi zsh
+STOW := $(shell command -v stow 2>/dev/null || echo nix run nixpkgs\#stow --)
 
-write:
-	@cp -R ./.config/ ~/.config/
-	@cp -R ./.tmux.conf ~/.tmux.conf
-	@cp -R ./.vimrc ~/.vimrc
-	@cp -R ./chth ~/bin/chth
-	@cp -R ./.vim/coc-settings.json ~/.vim/coc-settings.json
+# Dirs that also hold local, unshared files. Making them real dirs first
+# stops stow from linking the whole dir, so only shared items get linked.
+LOCAL_DIRS := .claude/skills .claude/hooks bin .vim \
+	.config/alacritty .config/coc/extensions .config/sioyek
+
+.PHONY: link unlink
+
+link:
+	@cd $(HOME) && mkdir -p $(LOCAL_DIRS)
+	$(STOW) -v -R -t $(HOME) $(PACKAGES)
+
+unlink:
+	$(STOW) -v -D -t $(HOME) $(PACKAGES)

@@ -1,0 +1,9 @@
+[[manager.prepend_keymap]]
+on = [ ":", "q" ]
+run = "quit"
+desc = "Exit the process"
+
+[[manager.prepend_keymap]]
+on = [ "q" ]
+run = "noop"
+desc = "Unbind q"
