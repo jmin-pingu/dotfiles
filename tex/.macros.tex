@@ -1,5 +1,5 @@
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
- 
+
 \declaretheoremstyle[name=Theorem,]{thmsty}
 \declaretheorem[style=thmsty,numberwithin=section]{theorem}
 \tcolorboxenvironment{theorem}{colback=LightGray}
@@ -13,14 +13,14 @@
 \tcolorboxenvironment{principle}{colback=LightGreen}
 
 \newcommand{\mysection}[2]{%
-	\setcounter{section}{#2}
+    \setcounter{section}{#2}
     \section*{#1}%
     \addcontentsline{toc}{section}{#1}%
     \markright{#1}%
 }
 
 \newcommand{\mysubsection}[2]{%
-	\setcounter{subsection}{#2}
+    \setcounter{subsection}{#2}
     \subsection{#1}%
     \markright{#1}%
 }
@@ -79,33 +79,33 @@
   innerrightmargin=8pt,
   innertopmargin=10pt,
   innerbottommargin=10pt,
-  linewidth=.5pt, % Frame line 
+  linewidth=.5pt, % Frame line
   frametitlerule=true, %set title true
   frametitlerulewidth=.25pt,%width
-]{thoughtbox}  
+]{thoughtbox}
 
 \newenvironment{pencil}[1]
   {
-	\par\noindent #1
+    \par\noindent #1
 
-	\medskip
+    \medskip
 
-  	\textbf{Proof:} 
+    \textbf{Proof:}
   }
   {
-	\bigskip
+    \bigskip
   }
 
 \newenvironment{question}[2]
   {
-	\par\noindent\myquestion{#1} #2
+    \par\noindent\myquestion{#1} #2
 
-	\medskip
+    \medskip
 
-  	\textbf{SOLUTION:} 
+    \textbf{SOLUTION:}
   }
   {
-	\bigskip
+    \bigskip
   }
 
 \newenvironment{thoughts}[1]
@@ -113,21 +113,21 @@
     \begin{thoughtbox}[frametitle={Thoughts:~#1}]
   }
   {\end{thoughtbox}
-   \medskip}
+    \medskip}
 
 \newenvironment{notes}
   {
-    \par\noindent\textbf{\uline{Notes}} 
+    \par\noindent\textbf{\uline{Notes}}
     \begin{itemize}[label={\textbullet}, topsep = -.5pt, leftmargin=*]
   }
   {\end{itemize}
-   \bigskip}
-   
+    \bigskip}
+
 \newenvironment{enumalph}
   {\begin{enumerate}[label=\alph*), topsep=-0.5pt, itemsep=.5pt]}
   {\end{enumerate}}
-  
+
 \renewenvironment{bullet}
   {\begin{itemize}[topsep=-0.5pt, itemsep=.5pt]}
   {\end{itemize}}
- 
+

@@ -3,7 +3,7 @@ program = "/bin/zsh"
 
 [cursor.style]
 blinking = "On"
- 
+
 [cursor.vi_mode_style]
 blinking = "Never"
 
@@ -72,7 +72,7 @@ lines = 35
 history=0
 
 [keyboard]
-bindings = [	
+bindings = [
 {key="Right", mods="Alt", chars="\u001BF"},
 {key="Left", mods="Alt", chars="\u001BB"},
 ]

@@ -54,7 +54,7 @@ augroup twilight256_config
 	" Coc highlight settings
 	autocmd ColorSchemePre,ColorScheme twilight256 highlight Conceal cterm=underline ctermbg=none ctermfg=9
 	autocmd ColorSchemePre,ColorScheme twilight256 highlight CocInlayHint ctermbg=none ctermfg=181
-	autocmd ColorSchemePre,ColorScheme twilight256 highlight CocFloating ctermbg=232 
+	autocmd ColorSchemePre,ColorScheme twilight256 highlight CocFloating ctermbg=232
 augroup end
 
 augroup miminalist_config
@@ -70,7 +70,7 @@ augroup miminalist_config
 	" Coc highlight settings
 	autocmd ColorSchemePre,ColorScheme minimalist highlight Conceal cterm=underline ctermfg=9
 	autocmd ColorSchemePre,ColorScheme minimalist highlight CocInlayHint ctermbg=none ctermfg=181
-	autocmd ColorSchemePre,ColorScheme minimalist highlight CocFloating ctermbg=232 
+	autocmd ColorSchemePre,ColorScheme minimalist highlight CocFloating ctermbg=232
 augroup end
 
 " NAV: nav-augroup-rdark
@@ -85,7 +85,7 @@ augroup rdark_config
 	autocmd ColorSchemePre,ColorScheme rdark-terminal2 highlight CurSearch ctermbg=3 ctermfg=0
 	" Coc settings
 	autocmd ColorSchemePre,ColorScheme rdark-terminal2 highlight CocInlayHint ctermbg=none ctermfg=181
-	autocmd ColorSchemePre,ColorScheme rdark-terminal2 highlight CocFloating ctermbg=232 
+	autocmd ColorSchemePre,ColorScheme rdark-terminal2 highlight CocFloating ctermbg=232
 augroup end
 
 
@@ -101,31 +101,31 @@ augroup habamax_config
 	" Coc-settings
 	autocmd ColorSchemePre,ColorScheme habamax highlight Conceal cterm=underline ctermbg=none ctermfg=8
 	autocmd ColorSchemePre,ColorScheme habamax highlight CocInlayHint ctermbg=none ctermfg=102
-	autocmd ColorSchemePre,ColorScheme habamax highlight CocFloating ctermbg=232 
+	autocmd ColorSchemePre,ColorScheme habamax highlight CocFloating ctermbg=232
 augroup end
 
 " NAV: nav-augroup-nord
-augroup nord_config 
+augroup nord_config
 	autocmd!
 	autocmd ColorSchemePre,ColorScheme nord highlight Visual ctermfg=249 ctermbg=233
 	autocmd ColorSchemePre,ColorScheme nord highlight CursorLineNr ctermbg=233 ctermfg=4
 	autocmd ColorSchemePre,ColorScheme nord highlight CursorLine ctermbg=233
 
 	autocmd ColorSchemePre,ColorScheme nord highlight CocInlayHint ctermbg=none ctermfg=103
-	autocmd ColorSchemePre,ColorScheme nord highlight CocFloating ctermbg=232 
+	autocmd ColorSchemePre,ColorScheme nord highlight CocFloating ctermbg=232
 augroup end
 
 " NAV: nav-augroup-mies
-augroup mies_config 
+augroup mies_config
 	set background=dark
 	autocmd ColorSchemePre,ColorScheme mies highlight Visual ctermfg=249 ctermbg=236
-	autocmd ColorSchemePre,ColorScheme mies highlight CursorLineNr ctermbg=236 
+	autocmd ColorSchemePre,ColorScheme mies highlight CursorLineNr ctermbg=236
 	autocmd ColorSchemePre,ColorScheme mies highlight CursorLine ctermbg=236
 
 	autocmd ColorSchemePre,ColorScheme mies highlight CocInlayHint ctermbg=none ctermfg=102
-	autocmd ColorSchemePre,ColorScheme mies highlight CocFloating ctermbg=232 
-	autocmd ColorSchemePre,ColorScheme mies highlight Search ctermbg=238 ctermfg=7 
-	autocmd ColorSchemePre,ColorScheme mies highlight CurSearch ctermbg=238 ctermfg=7 
+	autocmd ColorSchemePre,ColorScheme mies highlight CocFloating ctermbg=232
+	autocmd ColorSchemePre,ColorScheme mies highlight Search ctermbg=238 ctermfg=7
+	autocmd ColorSchemePre,ColorScheme mies highlight CurSearch ctermbg=238 ctermfg=7
 	autocmd ColorSchemePre,ColorScheme mies highlight IncSearch ctermbg=238 ctermfg=7
 augroup end
 
@@ -157,7 +157,7 @@ endfunction
 
 " A useful function for eating a character
 " TODO: actually understand what the fuck this function does cause I just C-c
-" C-v'ed it from 
+" C-v'ed it from
 function Eatchar(pat)
 	let c = nr2char(getchar(0))
 	return (c =~ a:pat) ? '' : c
@@ -166,23 +166,23 @@ endfunction
 
 " TODO: add a description for this function
 function! InsertIfEmpty(template_fn)
-    if @% == ""
-        " No filename for current buffer
+	if @% == ""
+		" No filename for current buffer
 		call a:template_fn()
-    elseif filereadable(@%) == 0
-        " File doesn't exist yet
+	elseif filereadable(@%) == 0
+		" File doesn't exist yet
 		call a:template_fn()
-    elseif line('$') == 1 && col('$') == 1
-        " File is empty
-        call a:template_fn()
-    endif
+	elseif line('$') == 1 && col('$') == 1
+		" File is empty
+		call a:template_fn()
+	endif
 endfunction
 
 " Macros: Mappings and Abbreviations ----------------------------------------------------------- {{{
 " NAV: nav-map
 
-" NORMAL MODE MACROS: Use <leader> 				
-" NAV: nav-map-normal 
+" NORMAL MODE MACROS: Use <leader>
+" NAV: nav-map-normal
 
 " save file
 nnoremap <leader>sf :w<CR>
@@ -193,7 +193,7 @@ nnoremap <leader>dir :NERDTreeToggle<CR>
 " Quick edit of $MYVIMRC
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
-" Cut, Copy and Paste 
+" Cut, Copy and Paste
 " NAV: nav-map-normal-ccp
 " NOTE: need to fix the functionality of cut
 nnoremap <leader>xw <esc>viw"*yviwD
@@ -218,19 +218,19 @@ nnoremap <leader>wj <C-w>j
 nnoremap <leader>wk <C-w>k
 nnoremap <leader>wh <C-w>h
 
-" Mappings for quick comments like and other things 
+" Mappings for quick comments like and other things
 nnoremap <leader>td iTODO: <esc><Plug>CommentaryLine<esc>A
 nnoremap <leader>nt iNOTE: <esc><Plug>CommentaryLine<esc>A
 nnoremap <leader>qna iQUESTION: <esc>
 	\oANSWER: <esc>
 	\Vk
-  	\<Plug>Commentary<esc>A
+	\<Plug>Commentary<esc>A
 
 " Open Terminal (close with <C-d)
 nnoremap <leader>ot :terminal<CR>
 tnoremap <leader>et <C-w>N:q!<CR>
 
-" Strong Beginning and End of Line 
+" Strong Beginning and End of Line
 nnoremap H 0
 nnoremap L $
 " Big scroll up and scroll down
@@ -304,7 +304,7 @@ vnoremap <leader>p "_dP      " Replace visual selection
 " buffer-nav
 " jump to specific buffer
 nnoremap <leader>bb :ls<CR>:b<space>
-" delete current buffer 
+" delete current buffer
 nnoremap <leader>bd :bd<CR>
 " jump to next buffer
 nnoremap <leader>bn :bn<CR>
@@ -349,14 +349,14 @@ inoremap <C-d> <esc>ddi
 " paste
 inoremap <c-v> <esc>"*pi
 
-" Mappings for quick comments like and other things 
+" Mappings for quick comments like and other things
 iabbrev td TODO: <esc><Plug>CommentaryLine<esc>A<c-r>=Eatchar('\s')<cr>
 iabbrev nt NOTE: <esc><Plug>CommentaryLine<esc>A<c-r>=Eatchar('\s')<cr>
 
 " VISUAL MODE MACROS: Do not use <leader>
 " NAV: nav-map-visual
 vnoremap <leader>x "*y<esc>v`>d
-" copy selected text 
+" copy selected text
 vnoremap <leader>cc "*y
 
 " indent selected lines
@@ -383,7 +383,7 @@ vnoremap [[ <esc>`>a]<esc>`<i[<esc>b
 vnoremap {{ <esc>`>a}<esc>`<i{<esc>b
 vnoremap << <esc>`>a><esc>`<i<<esc>b
 
-" OPERATOR PENDING MACROS: 
+" OPERATOR PENDING MACROS:
 " NAV: nav-map-op
 
 " NOTE: workflow for operator pending macros
@@ -392,7 +392,7 @@ vnoremap << <esc>`>a><esc>`<i<<esc>b
 " 3) KEY STEP: map keys
 " 4) text you want to include in the movement should be selected
 " Rules
-" if visually selected, operates on text 
+" if visually selected, operates on text
 " else operates on text between original cursor position and new position
 
 " use vim motion for inside <sign>: i<sign>
@@ -422,7 +422,7 @@ onoremap in` :<c-u>normal! f`vi`<cr>
 
 " Training Wheels ----------------------------------------------------------- {{{
 " NAV: nav-training
-" macros 
+" macros
 nnoremap 0 :echoe "Use H"<CR>
 nnoremap $ :echoe "Use L"<CR>
 noremap :w :echoe "Use \<leader\>sf"<CR>
@@ -456,7 +456,7 @@ inoremap <Down>  <ESC>:echoe "Use j"<CR>
 " Generic Configuration ----------------------------------------------------------- {{{
 " NAV: nav-config
 " TODO: does it make sense to cover all generic configuration in an augroup?
-" line number 
+" line number
 set number relativenumber numberwidth=8
 
 " defaults with open folds
@@ -477,7 +477,7 @@ set shiftwidth=4
 set tabstop=4
 set expandtab
 
-" Set indentation to be automatic 
+" Set indentation to be automatic
 set autoindent
 
 " set cursorline as true
@@ -503,7 +503,7 @@ set showmatch
 " Change split barrier to |.
 set fillchars=vert:\│
 " for folds
-set fillchars+=fold:· 
+set fillchars+=fold:·
 
 " set line space 0
 set linespace=0
@@ -574,20 +574,20 @@ highlight LineNr ctermbg=NONE
 highlight QuickFixLine ctermbg=NONE
 
 " Adjust highlighting for Folded tabs
-highlight Folded ctermfg=5 ctermbg=NONE 
+highlight Folded ctermfg=5 ctermbg=NONE
 
 " WildMenu Highlights
 highlight WildMenu ctermbg=7 cterm=bold ctermfg=6 guibg=NONE
-highlight StatusLineNC ctermbg=7 ctermfg=8 
+highlight StatusLineNC ctermbg=7 ctermfg=8
 highlight StatusLine ctermbg=7 ctermfg=8
 
-" ModeMsg 
+" ModeMsg
 highlight ModeMsg ctermbg=NONE ctermfg=7
 
 " Visual mode settings
 highlight Visual cterm=NONE
 " Search settings
-highlight CurSearch cterm=bold 
+highlight CurSearch cterm=bold
 
 
 augroup syntax
@@ -646,7 +646,7 @@ function! ExecuteViaCmake()
 endfunction
 "
 augroup cppgroup
-	" compile: 
+	" compile:
 	autocmd FileType cpp set tabstop=2 shiftwidth=2
 	autocmd FileType cpp nnoremap <leader>ru :call ExecuteViaCmake()<CR>
 augroup end
@@ -656,7 +656,7 @@ augroup end
 " *.zig
 " NAV: nav-augroup-zig
 augroup ziggroup
-	" compile: 
+	" compile:
 	autocmd FileType zig nnoremap <leader>ru :execute "!zig build run"<CR>
 	autocmd FileType zig nnoremap <leader>de :execute "!zig build run -freference-trace=12"<CR>
 	autocmd FileType zig nnoremap <leader>bu :execute "!zig build"<CR>
@@ -692,7 +692,7 @@ augroup end
 " *.go
 " NAV: nav-augroup-go
 augroup gogroup
-	" compile: 
+	" compile:
 	autocmd FileType go nnoremap <leader>ru :execute "!go run " . @% <CR>
 	autocmd FileType go nnoremap <leader>ma :execute "!make Makefile"<CR>
 augroup end
@@ -700,7 +700,7 @@ augroup end
 " *.hs
 " NAV: nav-augroup-haskell
 augroup haskellgroup
-	" compile: 
+	" compile:
 	autocmd FileType haskell set shiftwidth=2 tabstop=2
 	autocmd FileType haskell nnoremap <leader>ru :execute "!ghci " . @% <CR>
 augroup end
@@ -708,7 +708,7 @@ augroup end
 " *.rs
 " NAV: nav-augroup-rust
 augroup rustgroup
-	" compile: 
+	" compile:
 	autocmd FileType rust nnoremap <leader>ru :execute "!cargo run"<CR>
 	autocmd FileType rust nnoremap <leader>bu :execute "!cargo build"<CR>
 	autocmd FileType rust nnoremap <leader>te :execute "!cargo test"<CR>
@@ -717,7 +717,7 @@ augroup end
 " *.lua
 " NAV: nav-augroup-lua
 augroup luagroup
-	" compile: 
+	" compile:
 	autocmd FileType lua nnoremap <leader>ru :execute "!lua " . @% <CR>
 augroup end
 
@@ -733,10 +733,10 @@ endfunction
 function! ExecuteMainLatexDoc()
 	let dir = "."
 	let file = ""
-	" Assert that file is 
+	" Assert that file is
 	while (len(file) == 0)
 		let file = system("grep --exclude='*/.*' -rl \\begin{document} " . dir)
-		let dir = "../" . dir  
+		let dir = "../" . dir
 	endwhile
 	execute "!pdflatex " . file
 endfunction
@@ -794,19 +794,19 @@ augroup texgroup
 	autocmd SourcePost,FileType plaintex,tex set noautoindent nocindent nosmartindent indentexpr=
 	autocmd SourcePost,FileType plaintex,tex set linebreak textwidth=100
 
- 	" latex unique commands
+	" latex unique commands
 	autocmd FileType plaintex,tex nnoremap <leader>ne :call NewEnvironment()<CR>
-	" compile: 
+	" compile:
 	autocmd FileType plaintex,tex nnoremap <leader>ru :call ExecuteMainLatexDoc()<CR>
 	" vgrep --no-git --no-less -l \begin{document} *.tex
 augroup end
- 
+
 
 " *.json
 " NAV: nav-augroup-json
 function! JsonTemplate()
 	execute "normal! i{\n\n\b}\ek"
-endfunction	
+endfunction
 
 function! NewEntryJSON()
 	let key = input('k: ')
@@ -924,16 +924,16 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_statusline_ontop = 0
 " Powerline symbols
-if !exists('g:airline_symbols') 
-	let g:airline_symbols = {} 
-endif 
-let g:airline_symbols.linenr = ' LN:' 
-let g:airline_symbols.colnr = ' CN:' 
-let g:airline_symbols.maxlinenr = '' 
-let g:airline_left_sep = '' 
-let g:airline_left_alt_sep = '' 
-let g:airline_right_sep = '' 
-let g:airline_right_alt_sep = '' 
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+let g:airline_symbols.linenr = ' LN:'
+let g:airline_symbols.colnr = ' CN:'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
 " }}}
 
 " GoConfig ----------------------------- {{{
@@ -946,7 +946,7 @@ let g:go_doc_keywordprg_enabled = 0
 
 " OpamLsp Config
 let g:opamshare = substitute(system('opam var share'),'\n$','','''')
-     execute "set rtp+=" . g:opamshare . "/merlin/vim"
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
 " CocConfig ----------------------------- {{{
 " https://raw.githubusercontent.com/neoclide/coc.nvim/master/doc/coc-example-config.vim
@@ -956,15 +956,15 @@ let g:coc_start_at_startup = 1
 let s:coc_enabled = 1
 
 function! ToggleCoc()
-   if s:coc_enabled == 0
-      let s:coc_enabled = 1
-      CocStart
-      echo 'coc on'
-   else
-      let s:coc_enabled = 0
-      echo 'coc off'
-      call coc#rpc#stop()
-   endif
+	if s:coc_enabled == 0
+		let s:coc_enabled = 1
+		CocStart
+		echo 'coc on'
+	else
+		let s:coc_enabled = 0
+		echo 'coc off'
+		call coc#rpc#stop()
+	endif
 endfunction
 nnoremap <silent> <leader>coc :call ToggleCoc()<cr>
 
@@ -974,8 +974,8 @@ au FileType yaml if bufname("%") =~# "docker-compose.yaml" | set ft=yaml.docker-
 au FileType yaml if bufname("%") =~# "compose.yaml" | set ft=yaml.docker-compose | endif
 
 let g:coc_filetype_map = {
-  \ 'yaml.docker-compose': 'dockercompose',
-  \ }
+	\ 'yaml.docker-compose': 'dockercompose',
+	\ }
 
 au FileType yaml if bufname("%") =~# "docker-compose.yml" | set ft=yaml.docker-compose | endif
 au FileType yaml if bufname("%") =~# "compose.yml" | set ft=yaml.docker-compose | endif
@@ -983,8 +983,8 @@ au FileType yaml if bufname("%") =~# "docker-compose.yaml" | set ft=yaml.docker-
 au FileType yaml if bufname("%") =~# "compose.yaml" | set ft=yaml.docker-compose | endif
 
 let g:coc_filetype_map = {
-  \ 'yaml.docker-compose': 'dockercompose',
-  \ }
+	\ 'yaml.docker-compose': 'dockercompose',
+	\ }
 
 " FEATURE: Tab Completion
 " Use tab for trigger completion with characters ahead and navigate

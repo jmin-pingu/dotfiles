@@ -1,4 +1,4 @@
 [opener]
 edit = [
-	{ run = "vim $0", for = "unix", block = true } 
+    { run = "vim $0", for = "unix", block = true }
 ]

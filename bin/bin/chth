@@ -8,7 +8,7 @@ THEMES=(
 	"teen-titans:minimalist,vesper"
 	"depression:mies,Apple Classic"
 )
-	
+
 # first check for -themes option
 for argv in "$@"; do
 	if [[ $argv = "-themes" ]]; then
@@ -24,14 +24,14 @@ done
 if [[ $# -ne 1 ]]; then
 	echo "error: usage chth [theme]"
 	echo "use -themes to list available themes"
-	exit 1	
+	exit 1
 fi
 
 FOUND=0
 for theme in "${THEMES[@]}" ; do
-    KEY=${theme%%:*}
+	KEY=${theme%%:*}
 	if [[ "$KEY" = "$1" ]]; then
-    	VALUE=${theme#*:}
+		VALUE=${theme#*:}
 		FOUND=1
 		break
 	fi

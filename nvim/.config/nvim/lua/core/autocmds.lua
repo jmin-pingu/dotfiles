@@ -44,7 +44,7 @@ autocmd("TermOpen", {
 
     -- Two things make a :terminal sluggish under heavy output, which
     -- <leader>ru and <leader>rp produce constantly:
-    --   1. matchparen runs on CursorMoved AND TextChanged. 
+    --   1. matchparen runs on CursorMoved AND TextChanged.
     --   2. scrollback defaults to 10000 lines, all retained and redrawn.
     vim.b.matchparen_timeout = 1
     vim.b.matchparen_insert_timeout = 1
