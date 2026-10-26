@@ -1,8 +1,13 @@
 .DS_Store
 karabiner/.config/karabiner/automatic_backups/
 
-# Vault: share the folder layout and template only, never the notes.
+# Vault: share the top-level folders, template and references only.
+# Topic folders under notes/ stay local.
 claude/.claude/vault/**
 !claude/.claude/vault/**/
-!claude/.claude/vault/**/.gitkeep
+!claude/.claude/vault/*/.gitkeep
 !claude/.claude/vault/_template.md
+!claude/.claude/vault/notes/references/**
+# references/trusted/notes/ is scaffolding: the folder syncs, each machine's notes in it don't.
+claude/.claude/vault/notes/references/trusted/notes/**
+!claude/.claude/vault/notes/references/trusted/notes/.gitkeep

@@ -3,6 +3,7 @@
     imports = [
         ../../modules/home/git.nix
         ../../modules/home/zsh.nix
+        ./env.nix
     ];
 
     # Set once when home-manager is first installed here. Don't change it after.
