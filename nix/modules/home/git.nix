@@ -4,7 +4,7 @@
     programs.git = {
         enable = true;
         includes = [ { path = "~/.config/git/local"; } ];
-        ignores = [ ".DS_Store" ];
+        ignores = [ ".DS_Store" "**/.claude/settings.local.json" ];
         settings = {
             user.name = "jmin-pingu";
             user.email = lib.mkDefault "jonathanheromin@gmail.com";

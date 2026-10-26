@@ -27,6 +27,8 @@
                             home-manager.useGlobalPkgs = true;
                             home-manager.useUserPackages = true;
                             home-manager.verbose = true;
+                            # Move a file in the way to <name>.backup instead of failing.
+                            home-manager.backupFileExtension = "backup";
                             home-manager.users.${user} = import (./hosts + "/${name}/home.nix");
                         }
                     ];
