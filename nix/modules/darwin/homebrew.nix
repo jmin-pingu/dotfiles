@@ -1,41 +1,15 @@
-# Homebrew formulae and casks (GUI apps) that nixpkgs doesn't cover well.
+# Homebrew on every Mac: casks my dotfiles configure or my workflow needs.
+# Hosts add their own brews and casks in hosts/<name>/homebrew.nix.
 { ... }: {
     homebrew = {
         enable = true;
         taps = [];
-        brews = [
-            "zig"
-            "zls"
-            "go"
-            "portaudio"
-            # Haskell: ghcup manages ghc/cabal/stack/hls (in ~/.ghcup/bin).
-            # Don't add brew's ghc/cabal-install/haskell-stack - they shadow ghcup's.
-            "ghcup"
-            "qemu"
-            "llvm"
-            "lld"
-            "openjdk@17"
-            "postgresql"
-            "libiconv"
-            "coursier"
-        ];
-        casks = [ 
-            "spotify" 
-            "firefox" 
-            "obsidian" 
-            "anki" 
-            "ghostty" 
-            "anaconda"
-            "rekordbox"
-            "mactex"
-            "rstudio"
-            "zoom"
-            "flux-app"
-            "touchdesigner"
-            "godot"
-            "discord"
+        casks = [
+            "ghostty"
             "karabiner-elements"
-            "sublime-text"
+            "firefox"
+            "obsidian"
+            "anki"
         ];
     };
 }

@@ -1,8 +1,10 @@
 # nix-darwin system config for my Macs.
 { self, ... }: {
     imports = [
-        ../../modules/darwin/packages.nix
+        ../../modules/core/packages.nix
         ../../modules/darwin/homebrew.nix
+        ./packages.nix
+        ./homebrew.nix
     ];
 
     # Services
