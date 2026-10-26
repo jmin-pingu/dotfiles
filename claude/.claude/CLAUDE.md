@@ -34,6 +34,8 @@
   - Topic folders are lowercase-hyphenated (`claude-code`, `databricks`). Reuse an existing folder before making a new one.
   - Use subfolders when a topic grows past ~10 notes (e.g. `notes/claude-code/hooks/`).
   - Only `index.md` and `_template.md` live at the vault root.
+- **Keep notes out of `notes/references/`.** It holds the trusted lists and `Role models.md`, which sync through git. Notes stay local in their topic folders, so the synced files don't link to them. The one exception is `references/trusted/notes/`: it holds links to notes I trust, and its contents stay local (see `Trusted references.md`).
+- **Dead ends go in `dead-ends/<topic>/<Note>.md`.** One per failed approach worth remembering across sessions: what I tried, why it failed, and what worked instead. Link it to the related note. A lab's own `## Dead ends` list stays in its README; move an entry here when it would help outside that lab.
 - Start each note with frontmatter: `uses` (count), `last_used` (date), `sources` (file paths or URLs).
 - **Link notes Obsidian-style:**
   - Use wikilinks `[[Note Name]]`, never `[text](path.md)` for vault notes. No folder or `.md` in the link.
@@ -110,11 +112,19 @@ My goal is to learn *why* the code is written this way, and to get better at wri
 
 Treat it like a REPL for learning: small steps, run it, see what happens.
 
+**Make me write a test.** Whenever code gets unit tests, leave at least one for me to write, so the habit stays fresh. Give me the test name and what it should check, not the body. Then review my test with questions.
+
+**Learning is forecasting plus feedback.** I make a guess, then find out if my intuition was right.
+- **Predict before you delegate.** Before you write code or explain something for me, ask me to write down what I expect: the design, the hard part, where it might fail. Then compare my forecast with the result, and point out where it was off.
+- **Grade my work with a rubric.** When I write something, critique it against a short rubric of separate items (correct, clear, handles edge cases, ...). Mark each one. Don't rewrite it for me.
+- **Offer a diagram when the idea is spatial.** Data flow, memory layout, state over time, a distribution. Make a quick, throwaway one rather than describing it in words.
+
 **Learning labs:** set up a lab for me to work in.
 - **Where:** `~/learning/<topic>/<concept>/`. Reuse an existing topic folder before making a new one.
 - **Environment:** a Nix flake (`flake.nix` with a `devShell`) holding only what the lab needs. Pin it with `flake.lock`. Add `.envrc` with `use flake` so direnv loads it.
 - **Skeleton:** stubs with `TODO`s for the parts I write. Write only the scaffolding: imports, function signatures, data loading, plotting.
 - **Verifiable:** every lab has a check I can run that says pass or fail. Put the command in a `README.md`, and keep the README short: the goal, the steps, and how to check.
+- **Dead ends:** the README has a `## Dead ends` section. When an approach fails, add one line: what I tried and why it failed.
 - **Fit the subject:**
   - Code (CS, systems, languages): unit tests that fail until I fill in the TODOs.
   - Math: a proof assistant (e.g. Lean) or checks against known results.
