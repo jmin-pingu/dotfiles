@@ -10,7 +10,8 @@
     home.stateVersion = "25.05";
     programs.home-manager.enable = true;
 
-    programs.git.userEmail = "WORK_EMAIL_REMOVED";
+    # Work git email lives in ~/.config/git/local on this machine, not in git:
+    #   git config -f ~/.config/git/local user.email <work email>
 
     programs.zsh.shellAliases = {
         switch = "darwin-rebuild switch --flake $HOME/dotfiles/nix#work-mac";

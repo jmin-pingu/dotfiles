@@ -7,7 +7,7 @@ Configs for my machines.
 | Name | Machine | OS | Arch | Git email | Gets |
 |---|---|---|---|---|---|
 | `personal-mac` | Personal MacBook Pro | macOS | aarch64 | personal | core + its own packages, brews, casks, env vars |
-| `work-mac` | Work MacBook | macOS | aarch64 | work | core + its own packages, brews, casks, env vars |
+| `work-mac` | Work MacBook | macOS | aarch64 | work (set locally) | core + its own packages, brews, casks, env vars |
 | `linux` | Linux machine | NixOS | x86_64 | personal | core + its own packages |
 
 Each one lives in `nix/hosts/<name>/` and builds with `switch`.
@@ -45,6 +45,10 @@ Fresh installs don't have flakes turned on, so the first commands pass `--extra-
 4. If `~/.gitconfig` exists, remove its `user.name` and `user.email`. It overrides the per-machine git email from nix.
    ```
    git config -f ~/.gitconfig --unset user.email; git config -f ~/.gitconfig --unset user.name
+   ```
+   On `work-mac`, set the work email locally (it's not in git):
+   ```
+   git config -f ~/.config/git/local user.email <work email>
    ```
 5. Install the tmux plugin manager, then press `prefix` + `I` inside tmux:
    ```
