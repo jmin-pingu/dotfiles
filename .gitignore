@@ -1,3 +1,8 @@
-.git
-extensions
 .DS_Store
+karabiner/.config/karabiner/automatic_backups/
+
+# Vault: share the folder layout and template only, never the notes.
+claude/.claude/vault/**
+!claude/.claude/vault/**/
+!claude/.claude/vault/**/.gitkeep
+!claude/.claude/vault/_template.md

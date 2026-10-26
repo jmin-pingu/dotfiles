@@ -1,0 +1,133 @@
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+ 
+\declaretheoremstyle[name=Theorem,]{thmsty}
+\declaretheorem[style=thmsty,numberwithin=section]{theorem}
+\tcolorboxenvironment{theorem}{colback=LightGray}
+
+\declaretheoremstyle[name=Proposition,]{prosty}
+\declaretheorem[style=prosty,numberlike=theorem]{proposition}
+\tcolorboxenvironment{proposition}{colback=LightOrange}
+
+\declaretheoremstyle[name=Principle,]{prcpsty}
+\declaretheorem[style=prcpsty,numberlike=theorem]{principle}
+\tcolorboxenvironment{principle}{colback=LightGreen}
+
+\newcommand{\mysection}[2]{%
+	\setcounter{section}{#2}
+    \section*{#1}%
+    \addcontentsline{toc}{section}{#1}%
+    \markright{#1}%
+}
+
+\newcommand{\mysubsection}[2]{%
+	\setcounter{subsection}{#2}
+    \subsection{#1}%
+    \markright{#1}%
+}
+
+\newcommand{\contradiction}{\ensuremath{{\Rightarrow\mspace{-2mu}\Leftarrow}}}
+\newcommand{\myquestion}[1]{\noindent \textbf{P.#1)}}
+
+\newcommand{\ip}{{\color{red}(\textit{\textbf{IN PROGRESS}})}\;}
+\newcommand{\fp}{{\color{red}(\texttt{1st pass})}\;}
+\newcommand{\sndp}{{\color{blue}(\texttt{2nd pass})}\;}
+\newcommand{\tp}{{\color{green}(\texttt{3rd pass})}\;}
+
+% General Commands
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\brak}[1]{\left\langle#1\right\rangle}
+\newcommand{\incomplete}[1]{\noindent \textcolor{red}{#1}}
+\newcommand{\textbt}[1]{\textit{\textbf{#1}}}
+\newcommand{\binrep}[1]{{}_{\llcorner\mkern-3mu}{#1}_{\mkern-3mu\lrcorner}}
+
+% Distributions
+\newcommand{\Unif}{\text{Unif}}
+\newcommand{\Poisson}{\text{Poisson}}
+\newcommand{\Gam}{\text{Gamma}}
+\newcommand{\Normal}[2]{\text{Norm}(#1, #2)}
+
+% General Math
+\newcommand{\deriv}[2]{\frac{d #1}{d #2}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+
+% Turing Machine
+\newcommand{\start}{\triangleright}
+\newcommand{\blank}{\square}
+
+% Complexity Classes
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\NP}{\mathcal{NP}}
+\newcommand{\redto}{\leq_p}
+\newcommand{\NPhard}{\mathcal{NP}\text{-hard}}
+\newcommand{\NPcomplete}{\mathcal{NP}\text{-complete}}
+\newcommand{\dtime}[1]{\mathbf{DTIME}(#1)}
+\newcommand{\ntime}[1]{\mathbf{NTIME}(#1)}
+
+\newcommand{\bigoh}[1]{\mathcal{O}(#1)}
+\newcommand{\littleoh}[1]{\mathcal{o}(#1)}
+\newcommand{\bigtheta}[1]{\Theta(#1)}
+\newcommand{\bigomega}[1]{\Omega(#1)}
+\newcommand{\littleomega}[1]{\omega(#1)}
+
+% Environments
+\newmdenv[
+  linecolor=black, % Frame color
+  innerleftmargin=8pt, % Padding inside the frame
+  innerrightmargin=8pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  linewidth=.5pt, % Frame line 
+  frametitlerule=true, %set title true
+  frametitlerulewidth=.25pt,%width
+]{thoughtbox}  
+
+\newenvironment{pencil}[1]
+  {
+	\par\noindent #1
+
+	\medskip
+
+  	\textbf{Proof:} 
+  }
+  {
+	\bigskip
+  }
+
+\newenvironment{question}[2]
+  {
+	\par\noindent\myquestion{#1} #2
+
+	\medskip
+
+  	\textbf{SOLUTION:} 
+  }
+  {
+	\bigskip
+  }
+
+\newenvironment{thoughts}[1]
+  {
+    \begin{thoughtbox}[frametitle={Thoughts:~#1}]
+  }
+  {\end{thoughtbox}
+   \medskip}
+
+\newenvironment{notes}
+  {
+    \par\noindent\textbf{\uline{Notes}} 
+    \begin{itemize}[label={\textbullet}, topsep = -.5pt, leftmargin=*]
+  }
+  {\end{itemize}
+   \bigskip}
+   
+\newenvironment{enumalph}
+  {\begin{enumerate}[label=\alph*), topsep=-0.5pt, itemsep=.5pt]}
+  {\end{enumerate}}
+  
+\renewenvironment{bullet}
+  {\begin{itemize}[topsep=-0.5pt, itemsep=.5pt]}
+  {\end{itemize}}
+ 
