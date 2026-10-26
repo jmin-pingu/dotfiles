@@ -9,7 +9,6 @@
             "karabiner-elements"
             "firefox"
             "obsidian"
-            "anki"
         ];
     };
 }
