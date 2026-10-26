@@ -1,4 +1,4 @@
-# Extra Homebrew formulae and casks for my Macs, on top of modules/darwin/homebrew.nix.
+# Extra Homebrew formulae and casks for my personal Mac, on top of modules/darwin/homebrew.nix.
 { ... }: {
     homebrew = {
         brews = [

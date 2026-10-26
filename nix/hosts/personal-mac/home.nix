@@ -1,4 +1,4 @@
-# home-manager config for jmin on my Macs.
+# home-manager config for jmin on my personal Mac.
 { ... }: {
     imports = [
         ../../modules/home/git.nix
@@ -17,8 +17,8 @@
     # Mac-only aliases.
     programs.zsh = {
         shellAliases = {
-            switch = "darwin-rebuild switch --flake $HOME/dotfiles/nix#macbook";
-            rebuild = "darwin-rebuild switch --flake $HOME/dotfiles/nix#macbook";
+            switch = "darwin-rebuild switch --flake $HOME/dotfiles/nix#personal-mac";
+            rebuild = "darwin-rebuild switch --flake $HOME/dotfiles/nix#personal-mac";
             python = "python3";
             man = "/usr/bin/man";
         };

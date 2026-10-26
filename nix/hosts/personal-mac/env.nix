@@ -1,4 +1,4 @@
-# Environment variables for my Macs. Private values go in ~/.config/zsh/secrets.zsh.
+# Environment variables for my personal Mac. Private values go in ~/.config/zsh/secrets.zsh.
 { ... }: {
     programs.zsh = {
         localVariables = {

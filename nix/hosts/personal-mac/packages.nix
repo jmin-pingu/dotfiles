@@ -1,4 +1,4 @@
-# Extra nix packages for my Macs, on top of modules/core/packages.nix.
+# Extra nix packages for my personal Mac, on top of modules/core/packages.nix.
 { pkgs, ... }: {
     environment.systemPackages = with pkgs;
         [

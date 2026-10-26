@@ -1,5 +1,5 @@
 # Zsh setup that works on any machine. Hosts add their own aliases and paths.
-{ lib, ... }: {
+{ lib, pkgs, ... }: {
     programs.zsh = {
         enable = true;
         enableCompletion = true;
@@ -18,7 +18,7 @@
             nt = "vim /tmp/$(echo $(uuidgen) | tr '[:upper:]' '[:lower:]' | tr -d '[\-]')";
         };
         initContent = lib.mkOrder 1500 ''
-        source $HOME/powerlevel10k/powerlevel10k.zsh-theme
+        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
         source $HOME/.p10k.zsh
         bindkey '^ ' autosuggest-accept
         eval "$(direnv hook zsh)"
