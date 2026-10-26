@@ -55,14 +55,17 @@ If `$ARGUMENTS` has a focus, lead with it and trim unrelated parts.
 If the session learned something worth keeping beyond this task, run the `vault-save` skill too. The handoff file is for the task; the vault is for knowledge.
 
 ### 3. Start the new session
-If `$TMUX` is set, open a new window in the same working dir:
+Topic: the session name (from `/rename`), else the slug. Strip any trailing ` [continued]` or ` [handoff]` so names don't stack.
+
+If `$TMUX` is set:
 ```
-tmux new-window -c "<working dir>" -n handoff "claude '/handoff resume <handoff file>'"
+tmux rename-window -t "$TMUX_PANE" "<topic> [handoff]"
+tmux new-window -c "<working dir>" -n "<topic> [continued]" "claude -n '<topic> [continued]' '/handoff resume <handoff file>'"
 ```
-If the sandbox blocks it, or not in tmux, give the user that `claude ...` command to run.
+If the sandbox blocks it, or not in tmux, give the user the `claude -n ...` command to run.
 
 ### 4. Tell the user
-One or two lines: the handoff file path, and that the new session is open (or the command to run). This session can be closed.
+One or two lines: the handoff file path, and that the new session is open (or the command to run). Claude can't rename its own session, so ask the user to run `/rename <topic> [handoff]` here. This session can be closed.
 
 ## Resume
 
