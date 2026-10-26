@@ -55,7 +55,12 @@ If `$ARGUMENTS` has a focus, lead with it and trim unrelated parts.
 If the session learned something worth keeping beyond this task, run the `vault-save` skill too. The handoff file is for the task; the vault is for knowledge.
 
 ### 3. Start the new session
-Topic: the session name (from `/rename`), else the slug. Strip any trailing ` [continued]` or ` [handoff]` so names don't stack.
+Topic: use the session's original name if it has one. Look in order:
+1. A system reminder saying "The user named this session ...".
+2. The latest `/rename` in the transcript: `grep '"type":"custom-title"' ~/.claude/projects/*/<session id>.jsonl | tail -1`. The session id is in the scratchpad path, or in `~/.cache/claude-ctx/` (newest file).
+3. Else the slug.
+
+Strip any trailing ` [continued]` or ` [handoff]` so names don't stack. Use the topic for the handoff file slug too.
 
 If `$TMUX` is set:
 ```
