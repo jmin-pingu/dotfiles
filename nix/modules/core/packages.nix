@@ -29,7 +29,7 @@
             marksman                       # markdown
             markdownlint-cli2              # markdown linter (replaces coc-markdownlint)
             yaml-language-server           # yaml (+ docker-compose schemas)
-            dockerfile-language-server-nodejs
+            dockerfile-language-server
             docker-compose-language-service
             taplo                          # toml
             terraform-ls                   # terraform

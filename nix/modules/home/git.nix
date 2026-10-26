@@ -3,11 +3,11 @@
 { lib, ... }: {
     programs.git = {
         enable = true;
-        userName = "jmin-pingu";
-        userEmail = lib.mkDefault "jonathanheromin@gmail.com";
         includes = [ { path = "~/.config/git/local"; } ];
         ignores = [ ".DS_Store" ];
-        extraConfig = {
+        settings = {
+            user.name = "jmin-pingu";
+            user.email = lib.mkDefault "jonathanheromin@gmail.com";
             init.defaultBranch = "main";
             push.autoSetupRemote = true;
         };

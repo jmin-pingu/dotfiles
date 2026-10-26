@@ -51,7 +51,7 @@
         {
             # One line per machine. Pick one with: --flake .#<name>
             darwinConfigurations."personal-mac" = mkMac { name = "personal-mac"; };
-            darwinConfigurations."work-mac" = mkMac { name = "work-mac"; };
+            darwinConfigurations."work-mac" = mkMac { name = "work-mac"; user = "jonathan"; };
             nixosConfigurations."linux" = mkLinux { name = "linux"; };
         };
 }
