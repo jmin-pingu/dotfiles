@@ -89,7 +89,7 @@ Copy a folder in `nix/hosts/`, edit its packages, and add one line to `nix/flake
 - Vault notes. Only the top-level folders, `_template.md` and `notes/references/` are tracked.
 - `~/.claude/settings.json` and `~/.claude/skills/synced/`. On a new machine, wire the handoff hooks into `settings.json` by hand:
   - `"statusLine": {"type": "command", "command": "python3 ~/.claude/hooks/context-status.py"}`
-  - `UserPromptSubmit` hook: `python3 ~/.claude/hooks/handoff-nudge.py`
+  - `UserPromptSubmit` hooks: `python3 ~/.claude/hooks/handoff-nudge.py` and `python3 ~/.claude/hooks/session-title.py` ("close this conversation" -> `<topic> [closed]`)
 
 ## TODO
 
