@@ -18,14 +18,14 @@ Configs for my Macs. Every Mac gets the same settings.
 1. Install Nix.
 2. Clone and link:
    ```
-   git clone https://github.com/jmin-pingu/dotfiles.git ~/dotfiles
-   cd ~/dotfiles && make link
+   git clone https://github.com/jmin-pingu/dotfiles.git $HOME/dotfiles
+   cd $HOME/dotfiles && make link
    ```
    If a real file is already in the way, move it out and run again.
 3. Make `~/.config/zsh/secrets.zsh` with `chmod 600`. One `NAME="value"` per line.
 4. First build:
    ```
-   sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ~/dotfiles/nix#macbook
+   sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake $HOME/dotfiles/nix#macbook
    ```
    After that, just run `switch`.
 
