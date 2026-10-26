@@ -11,6 +11,10 @@
     # Homebrew and other per-user settings apply to this user.
     system.primaryUser = user;
 
+    # Caps Lock acts as Escape on every keyboard, built-in included.
+    system.keyboard.enableKeyMapping = true;
+    system.keyboard.remapCapsLockToEscape = true;
+
     # Set Git commit hash for darwin-version.
     system.configurationRevision = self.rev or self.dirtyRev or null;
 }
