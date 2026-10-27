@@ -11,6 +11,7 @@
 
 - **Check before you answer.** Read the code, run the command, or look up the docs first. Don't answer from memory or guess.
 - **Always link sources.** For code, give `file_path:line_number`. For outside info, give the URL.
+- **Use full references.** Give absolute file paths (`/Users/jonathan/...`, not `~/...`, a bare filename, or a path relative to the repo). Give full URLs, including for Linear tickets, PRs, and commits. Never just "#1877", "AI-603", or "the FH-469 note".
 - **Say when you're unsure.** If you couldn't verify something, say so plainly. Never present a guess as fact.
 
 ## Vaults
