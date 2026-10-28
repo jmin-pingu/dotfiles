@@ -29,6 +29,9 @@ return {
       showInferredType = true,
       superMethodLensesEnabled = true,
       excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+      -- Use the Nix-installed metals on PATH (macs). Hosts without it (linux)
+      -- fall back to nvim-metals' own cache, filled by :MetalsInstall.
+      useGlobalExecutable = vim.fn.executable("metals") == 1,
     }
 
     config.init_options.statusBarProvider = "off"
