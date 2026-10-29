@@ -285,6 +285,7 @@ return {
 
         -- gd: the one navigation key 0.11 leaves out (it only wires <C-]>).
         bmap("n", "gd", vim.lsp.buf.definition, "Definition")
+        bmap("n", "<leader>gd", vim.lsp.buf.definition, "Definition")
 
         -- Hover. The default is K, but keymaps.lua maps K to the 25k motion
         -- globally, and that wins here because we would otherwise be fighting
