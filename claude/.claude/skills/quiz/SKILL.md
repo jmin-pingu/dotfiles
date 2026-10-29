@@ -1,8 +1,10 @@
 ---
 name: quiz
 description: Write and run a quiz on what this session covered, or on a PR or diff, to check the user understands it. Use when the user says "quiz me", "/quiz", "test my understanding", "make a quiz for this session", or when a PR the user authored is about to be marked ready or merged (the merge gate in ~/workspace/CLAUDE.md). Fits the questions to what the user already knows, puts expected answers in the file, runs it one question at a time, and grades.
-argument-hint: "[session | pr <number> | diff] [repo] (default: this session)"
+argument-hint: "[session | pr <number> | diff | review] [repo] (default: this session)"
 ---
+
+**`review` mode** (spaced repetition): skip to **Review** at the bottom.
 
 # Quiz
 
@@ -33,6 +35,7 @@ repo: <repo>
 ticket: <full ticket URL or none>
 pr: <full PR URL or none>
 created: <date>
+verified: <repo>@<short sha of origin/main> <date>
 sources: [<file paths / URLs>]
 ---
 
@@ -50,8 +53,8 @@ Level: <one line: what this quiz targets, from _understanding.md>
 ## 4. Fit
 
 ## Results
-| Date | Q | My answer (short) | Grade |
-|---|---|---|---|
+| Date | Q | My answer (short) | Grade | Interval | Next due |
+|---|---|---|---|---|---|
 
 ## Related
 - [[<lesson>]]
@@ -81,6 +84,14 @@ Level: <one line: what this quiz targets, from _understanding.md>
 - Update `_understanding.md`: move items between Solid / Shaky / Not seen, with the date and the question that showed it.
 - Link the quiz both ways with its lesson (and ticket/PR in frontmatter). List it in `index.md` under "Quizzes".
 - For a PR: report `Quiz: <path> — <score>, passed? yes/no`. Until it's passed, don't mark the PR ready, merge it, or enable auto-merge.
+
+## Review (spaced repetition)
+
+1. **Find due questions:** scan `~/workspace/vault/quiz/**/*.md` (and `~/.claude/vault/quiz/`) Results tables; a question is due when its latest `Next due` ≤ today. Pick at most 5, oldest due first, mixing repos.
+2. **Drift check first:** for each picked quiz, `git -C ~/workspace/code/repos-main/<repo> fetch -q && git -C ... log --oneline <verified sha>..origin/main -- <sources>`. If anything changed, reread the code; update the question and answer (or drop it), bump `verified`, and log it in `~/workspace/vault/todos/Context maintenance.md`. Never quiz on stale answers.
+3. **Ask** as in "Run it". Hands-on tasks are redone in scratch (the code may have moved on: that's part of the test).
+4. **Schedule:** wrong → 1 day; partly → 3 days; right → double the last interval (first right 7 days, cap 90). Append a Results row with the new `Interval` and `Next due`.
+5. **Report:** questions asked, grades, next due date overall, and any drift found.
 
 ## `_understanding.md` template
 
