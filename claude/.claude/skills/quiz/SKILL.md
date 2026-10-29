@@ -77,7 +77,7 @@ Level: <one line: what this quiz targets, from _understanding.md>
 1. One question at a time. Don't show the answer first. Help only as far as the user's **assistance level** allows (`~/workspace/CLAUDE.md` → Assistance levels); log the level used in the Results row. If the user asks a question back, Socratic rules apply. For a task, the user runs it; you read the result (diff, compile output) and grade from that, not from their description. Never do the task for them.
 2. Grade **right / partly / wrong** against the expected answer. Say what was right in one line; for partly/wrong, ask one follow-up question before revealing.
 3. Append to **Results** after each answer.
-4. Each miss → propose one Anki card (rules in `~/.claude/CLAUDE.md`).
+4. Each miss → name the idea for one Anki card; the user writes the card in their own words, you check it, then add it verbatim (`~/workspace/CLAUDE.md` → Anki cards: my words).
 5. **Pass** = no question left "wrong". Re-ask each miss in a later turn, after the user rereads the code.
 
 ## 5. After

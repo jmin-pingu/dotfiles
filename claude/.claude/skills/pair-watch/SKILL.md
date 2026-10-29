@@ -66,7 +66,7 @@ Tell the user in one line that you're watching and how to stop. When the monitor
 - Never edit the user's files, except to restore something they lost by accident, and only when they ask.
 - Don't run tools that share state with their editor while it's busy (e.g. `scala-cli` without `--server=false` shares Bloop with Metals).
 - If the user asks a question mid-watch, answer it (Socratic: their guess first) and keep the watch running.
-- When a concept closes, propose one Anki card per `~/.claude/CLAUDE.md`.
+- When a concept closes, name the idea for one Anki card; the user writes the card in their own words, you check it, then add it verbatim (`~/workspace/CLAUDE.md` → Anki cards: my words).
 
 ## Stop
 
