@@ -297,13 +297,14 @@ return {
         -- only for servers advertising textDocument/rangeFormatting - gopls does
         -- not, so gq falls back to the built-in formatter there. This mapping
         -- always uses the LSP.
-        -- <leader>f is the fzf-lua prefix now, so format moved to <leader>cf.
+        -- <leader>f is the fzf-lua prefix and <leader>cf copies the file path,
+        -- so format lives on <leader>lf (l = LSP).
         -- Leaving it on <leader>f would make every fzf keystroke wait out
         -- timeoutlen in LSP buffers.
         -- Only when the server can actually format. marksman (markdown) cannot,
         -- and binding it anyway would shadow the ftplugin's prettier/gq mapping.
         if client:supports_method("textDocument/formatting") then
-          bmap({ "n", "x" }, "<leader>cf", function() vim.lsp.buf.format({ async = true }) end, "Format")
+          bmap({ "n", "x" }, "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, "Format")
         end
 
         -- Inlay hints, where the server offers them.

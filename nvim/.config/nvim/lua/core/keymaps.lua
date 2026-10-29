@@ -23,6 +23,12 @@ map("n", "<leader>xp", 'vip"*yvipd', opts)
 map("n", "<leader>cw", 'viw"*y', opts)
 map("n", "<leader>cl", 'V"*y', opts)
 map("n", "<leader>cp", 'vip"*y', opts)
+-- Copy the current file's absolute path.
+map("n", "<leader>cf", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("*", path)
+  vim.notify("copied " .. path)
+end, { silent = true, desc = "Copy file path" })
 
 map("n", "<leader>v", '"*p', opts)
 

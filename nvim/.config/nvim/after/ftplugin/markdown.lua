@@ -18,11 +18,11 @@ vim.api.nvim_create_autocmd("BufWinLeave", {
   end,
 })
 
--- <leader>cf: format, same key as LSP buffers. Whole file in normal mode,
+-- <leader>lf: format, same key as LSP buffers. Whole file in normal mode,
 -- the selection in visual mode.
-vim.keymap.set("n", "<leader>cf", function()
+vim.keymap.set("n", "<leader>lf", function()
   local view = vim.fn.winsaveview()
   vim.cmd("silent keepjumps normal! gggqG")
   vim.fn.winrestview(view)
 end, { buffer = 0, silent = true, desc = "markdown: Format file" })
-vim.keymap.set("x", "<leader>cf", "gq", { buffer = 0, silent = true, desc = "markdown: Format selection" })
+vim.keymap.set("x", "<leader>lf", "gq", { buffer = 0, silent = true, desc = "markdown: Format selection" })
