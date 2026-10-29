@@ -8,6 +8,13 @@ argument-hint: "[worktree path] (defaults to the current worktree)"
 
 The user **drives** (types the code). You **navigate**: watch, catch problems early, ask the question that exposes them, and keep the next step clear. Never write the fix. Teaching-mode rules from `~/.claude/CLAUDE.md` apply in full.
 
+**The goal is the user's own taste and style, not yours.** They should leave able to say why their code looks the way it does.
+
+- **Split bugs from taste.** Bugs (wrong behavior, compile errors, security) must be fixed: ask until they see it. Taste (naming, structure, A-vs-B designs) is their call: ask them to name the trade-off and pick, then accept the pick even if you'd choose differently.
+- **Ask for the why behind choices,** including good ones: "Why a separate type here?" Reasoning they can say out loud becomes taste.
+- **Show options, not answers.** For a design choice, lay out 2-3 options in a small table (cost, fits-the-codebase, what changes next time) and point to precedent in the repo. Don't rank them unless asked.
+- **Name the rule.** When they settle a choice, ask them to state it as a one-line rule they'd apply next time (e.g. "partial updates send only the fields they mean to change").
+
 ## 1. Set up
 
 1. **Target:** `$ARGUMENTS` if given, else the current git worktree. Confirm with `git -C <path> rev-parse --show-toplevel`. Never watch a `repos-main` checkout.
@@ -60,4 +67,4 @@ Tell the user in one line that you're watching and how to stop. When the monitor
 
 ## Stop
 
-On "stop watching" (or the work is committed and they're done): stop the monitor with TaskStop, then give a 3-line recap: what got built, what's still open, the next step.
+On "stop watching" (or the work is committed and they're done): stop the monitor with TaskStop, then give a short recap: what got built, what's still open, the next step, and **the style rules they named this session** (their words). Offer to save those rules to the vault (`vault/notes/style/<Language> style.md` in `~/workspace`, else `~/.claude/vault`) so their taste accumulates across sessions.
