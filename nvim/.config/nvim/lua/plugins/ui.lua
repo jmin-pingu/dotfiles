@@ -41,6 +41,8 @@ return {
           },
           lualine_c = { { "filename", path = 1 } },
           lualine_x = {
+            -- Metals status, e.g. "Compiling common". Empty outside Scala.
+            function() return vim.g.metals_status or "" end,
             -- Which LSP servers are attached to this buffer.
             {
               function()

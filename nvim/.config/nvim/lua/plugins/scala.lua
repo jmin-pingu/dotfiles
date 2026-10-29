@@ -38,7 +38,9 @@ return {
       javaHome = vim.env.JAVA_HOME,
     }
 
-    config.init_options.statusBarProvider = "off"
+    -- "on" puts Metals' status (importing, compiling, ...) in vim.g.metals_status,
+    -- which lualine shows (plugins/ui.lua). "off" would need a progress plugin.
+    config.init_options.statusBarProvider = "on"
 
     -- Pick up blink's completion capabilities if blink is already loaded; metals
     -- works fine without them, so this stays optional rather than forcing a load.
