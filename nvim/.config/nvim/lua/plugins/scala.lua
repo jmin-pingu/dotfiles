@@ -32,6 +32,10 @@ return {
       -- Use the Nix-installed metals on PATH (macs). Hosts without it (linux)
       -- fall back to nvim-metals' own cache, filled by :MetalsInstall.
       useGlobalExecutable = vim.fn.executable("metals") == 1,
+      -- Run Metals (and the Bloop it starts) on the shell's JDK. The Nix metals
+      -- ships JDK 21, and older Scala 2.13 compilers can't read JDK 21
+      -- class files ("bad constant pool index"). Point JAVA_HOME at JDK 17 for those.
+      javaHome = vim.env.JAVA_HOME,
     }
 
     config.init_options.statusBarProvider = "off"
