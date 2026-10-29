@@ -36,6 +36,9 @@ return {
       -- ships JDK 21, and older Scala 2.13 compilers can't read JDK 21
       -- class files ("bad constant pool index"). Point JAVA_HOME at JDK 17 for those.
       javaHome = vim.env.JAVA_HOME,
+      -- Bloop's heap. Without -Xmx it ran out of memory compiling a large
+      -- module; match the project's sbt heap (.jvmopts). Applies on Bloop restart.
+      bloopJvmProperties = { "-Xmx8G", "-Xss4m" },
     }
 
     -- "on" puts Metals' status (importing, compiling, ...) in vim.g.metals_status,
