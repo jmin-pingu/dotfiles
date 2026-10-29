@@ -58,7 +58,7 @@ Level: <one line: what this quiz targets, from _understanding.md>
 ```
 
 - 2-4 questions per section (3-4 total for a `low`-ceiling PR).
-- **Learn by doing: at least half the questions are hands-on tasks**, and every section has one. The user does the work; the check says pass or fail. Examples:
+- **Learn by producing: at least half the questions are hands-on tasks**, and every section has one. Prefer tasks that make the user write the language or library from scratch (e.g. "derive a null-dropping encoder for a new case class without looking at the repo"), not just edit lines already there. The user does the work; the check says pass or fail. Examples:
   - **Change and predict:** "Swap the `Encoder` for a `Codec` in `UserUpdate`. Predict the JSON, then run the scratch check." 
   - **Break it:** "Delete line X. Which compile error or test failure do you expect? Run the compile and compare."
   - **Write it:** "Write a 5-line `scala-cli` script that encodes `UserUpdate(None, Some(Seq("t")))`" or "Write the test `rejects a tampered body`" (name and what it checks only, never the body).
