@@ -58,12 +58,19 @@ Level: <one line: what this quiz targets, from _understanding.md>
 ```
 
 - 2-4 questions per section (3-4 total for a `low`-ceiling PR).
-- Types: predict the output, explain why, spot the bug in a changed snippet, trace a request. No pure recall.
+- **Learn by doing: at least half the questions are hands-on tasks**, and every section has one. The user does the work; the check says pass or fail. Examples:
+  - **Change and predict:** "Swap the `Encoder` for a `Codec` in `UserUpdate`. Predict the JSON, then run the scratch check." 
+  - **Break it:** "Delete line X. Which compile error or test failure do you expect? Run the compile and compare."
+  - **Write it:** "Write a 5-line `scala-cli` script that encodes `UserUpdate(None, Some(Seq("t")))`" or "Write the test `rejects a tampered body`" (name and what it checks only, never the body).
+  - **Trace it live:** "Run the route locally and `curl` it with a bad signature. What status comes back, and which line decided it?"
+  - **Find it:** "Without searching for the name, find where `UserRoutes` gets wired in. What did you search for?"
+- Each task's answer callout holds the **check command and the pass condition**, not a solution to copy. Scratch work goes in `$TMPDIR` or the learning lab, never committed to the repo; restore any deliberate break before moving on.
+- The rest: predict the output, explain why, spot the bug, trace a request on paper. No pure recall.
 - Early in a repo, weight **Fit** toward structure: modules and dependency direction, where routes/clients/config/models live, DI wiring, request flow.
 
 ## 4. Run it
 
-1. One question at a time. Don't show the answer first. If the user asks a question back, Socratic rules apply.
+1. One question at a time. Don't show the answer first. If the user asks a question back, Socratic rules apply. For a task, the user runs it; you read the result (diff, compile output) and grade from that, not from their description. Never do the task for them.
 2. Grade **right / partly / wrong** against the expected answer. Say what was right in one line; for partly/wrong, ask one follow-up question before revealing.
 3. Append to **Results** after each answer.
 4. Each miss → propose one Anki card (rules in `~/.claude/CLAUDE.md`).
