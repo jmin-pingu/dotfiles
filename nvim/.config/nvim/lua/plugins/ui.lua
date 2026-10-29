@@ -17,6 +17,29 @@ return {
         return
       end
 
+      -- LSP progress ($/progress), e.g. Metals' "Compiling api". Metals 1.3.3
+      -- reports compiles here, not in g:metals_status. Keep the latest message;
+      -- clear it 2s after the work ends so "Compiled api (0.23s)" stays readable.
+      local lsp_progress = ""
+      vim.api.nvim_create_autocmd("LspProgress", {
+        group = vim.api.nvim_create_augroup("lualine_lsp_progress", { clear = true }),
+        callback = function(ev)
+          local value = ev.data and ev.data.params and ev.data.params.value or {}
+          local text = table.concat(vim.tbl_filter(function(s) return s and s ~= "" end,
+            { value.title, value.message }), " ")
+          lsp_progress = text
+          vim.cmd.redrawstatus()
+          if value.kind == "end" then
+            vim.defer_fn(function()
+              if lsp_progress == text then
+                lsp_progress = ""
+                vim.cmd.redrawstatus()
+              end
+            end, 2000)
+          end
+        end,
+      })
+
       lualine.setup({
         options = {
           theme = "auto", -- follows the active colorscheme
@@ -41,8 +64,14 @@ return {
           },
           lualine_c = { { "filename", path = 1 } },
           lualine_x = {
-            -- Metals status, e.g. "Compiling common". Empty outside Scala.
-            function() return vim.g.metals_status or "" end,
+            -- Build/compile status: LSP progress first, else Metals' own status
+            -- (e.g. "Importing build"). Empty when idle or outside Scala.
+            function()
+              if lsp_progress ~= "" then
+                return lsp_progress
+              end
+              return vim.g.metals_status or ""
+            end,
             -- Which LSP servers are attached to this buffer.
             {
               function()
