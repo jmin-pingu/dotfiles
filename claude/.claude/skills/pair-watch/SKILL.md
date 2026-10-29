@@ -1,6 +1,6 @@
 ---
 name: pair-watch
-description: Pair-program with the user as navigator while they drive. Watches a worktree's diff in the background, and each time their edits pause, reviews the change with questions (not fixes), and compiles or tests when a step looks done. Use when the user says "pair with me", "pair programming", "watch my code", "review as I go", "review async", or "/pair-watch [worktree path]". Stops on "stop watching".
+description: Pair-program with the user as navigator while they drive. Reviews the worktree's new diff with questions (not fixes) when they say "check" (often sent from Neovim with <leader>am), and also from a slow background watch after their edits settle. Compiles or tests when a step looks done. Use when the user says "pair with me", "pair programming", "watch my code", "review as I go", "review async", or "/pair-watch [worktree path]". Stops on "stop watching".
 argument-hint: "[worktree path] (defaults to the current worktree)"
 ---
 
@@ -22,19 +22,22 @@ The user **drives** (types the code). You **navigate**: watch, catch problems ea
 3. **Fast check:** pick the repo's quickest compile or test command (its `CLAUDE.md`, or `~/workspace/devshells/<repo>` shellHook). e.g. `nix develop ~/workspace/devshells/<repo> --command <check>`.
 4. **Agree the step:** ask what they're writing first. One small step at a time.
 
-## 2. Start the watch
+## 2. Two triggers
 
-Use the Monitor tool, `timeout_ms: 1800000`, description `pair-watch: <repo> <branch>`. The script emits one line when the diff (tracked + untracked, excluding build output) has changed and then stayed still for 15 s:
+- **On request:** review whenever the user says "check" / "verify" / "test again" (often sent from Neovim with `<leader>am`, after `<leader>as` on a selection).
+- **Slow watch:** a background poll that fires only after edits have settled for a while. It's a safety net, not a running commentary: each event costs a model turn, so keep it slow. Skip an event if you reviewed the same diff on request moments ago.
+
+Start the watch with the Monitor tool, `timeout_ms: 1800000`, description `pair-watch: <repo> <branch>`. Poll every 30 s; emit one line when the diff (tracked + untracked) has changed and then stayed still for 2 minutes:
 
 ```sh
 cd <worktree> || exit 1
 snap() { { git diff; git ls-files --others --exclude-standard -z | xargs -0 cat 2>/dev/null; } | shasum | cut -c1-12; }
 last=$(snap); pending=""; since=0
 while true; do
-  sleep 3
+  sleep 30
   cur=$(snap)
   if [ "$cur" != "$last" ]; then last=$cur; pending=1; since=$(date +%s); continue; fi
-  if [ -n "$pending" ] && [ $(( $(date +%s) - since )) -ge 15 ]; then
+  if [ -n "$pending" ] && [ $(( $(date +%s) - since )) -ge 120 ]; then
     echo "changed: $(git diff --stat | tail -1) | untracked: $(git ls-files --others --exclude-standard | tr '\n' ' ')"
     pending=""
   fi
@@ -43,7 +46,7 @@ done
 
 Tell the user in one line that you're watching and how to stop. When the monitor expires, re-arm it silently unless they said stop.
 
-## 3. On each event
+## 3. On each "check" or watch event
 
 1. **Read only what changed** since your last review (`git diff`, plus new files). Don't re-review settled code.
 2. **Is the step done?** If it looks mid-edit (half a method, syntax obviously open), say nothing or one line ("looks mid-edit, waiting"). Don't pile on.
