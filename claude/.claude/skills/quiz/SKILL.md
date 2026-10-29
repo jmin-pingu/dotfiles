@@ -1,7 +1,7 @@
 ---
 name: quiz
-description: Write and run a quiz on what this session covered, or on a PR or diff, to check the user understands it. Use when the user says "quiz me", "/quiz", "test my understanding", "make a quiz for this session", or when a PR the user authored is about to be marked ready or merged (the merge gate in ~/workspace/CLAUDE.md). Fits the questions to what the user already knows, puts expected answers in the file, runs it one question at a time, and grades.
-argument-hint: "[session | pr <number> | diff | review] [repo] (default: this session)"
+description: Write and run a quiz on what this session covered, a PR or diff, or a vault lesson or learning todo we worked through, to check the user understands it. Use when the user says "quiz me", "/quiz", "test my understanding", "make a quiz for this session", or when a PR the user authored is about to be marked ready or merged (the merge gate in ~/workspace/CLAUDE.md). Fits the questions to what the user already knows, puts expected answers in the file, runs it one question at a time, and grades.
+argument-hint: "[session | pr <number> | diff | lesson <name> | todo <name> | review] [repo] (default: this session)"
 ---
 
 **`review` mode** (spaced repetition): skip to **Review** at the bottom.
@@ -15,6 +15,7 @@ The rules live in `~/workspace/CLAUDE.md` (Vault → Quizzes, and Pull requests 
 From `$ARGUMENTS` (default `session`):
 - **session:** what this session built, decided, or explained. Code the user wrote, design choices, concepts we closed.
 - **pr <n>** / **diff:** the final diff (`gh pr diff <n>` or `git diff origin/main...`), including parts the user didn't write.
+- **lesson <name>** / **todo <name>:** a vault lesson or learning todo we worked through. Quiz its questions and its "Do it" tasks; file it at `quiz/<topic>/<note name>.md`; add `quiz: [[<quiz name>]]` to the note's frontmatter and link both ways. A todo is done only when its quiz passes. Also trigger this automatically when we finish (a chunk of) a lesson or todo.
 
 **Repo:** the arg, else the current worktree's repo. A session with no repo (e.g. a learning lab, tooling) uses a topic name instead.
 
