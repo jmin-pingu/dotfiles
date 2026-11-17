@@ -6,9 +6,9 @@ return {
     ft = { "markdown" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {
-      -- Quiet headings: no full-width background bars and no sign-column icon.
-      -- Heading text keeps its colour.
-      heading = { backgrounds = {}, sign = false },
+      -- No heading styling: headings keep only normal syntax colours.
+      -- Code blocks and the rest still render.
+      heading = { enabled = false },
     },
   },
 }
