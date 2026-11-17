@@ -77,6 +77,10 @@ return {
         markdown = { "markdownlint-cli2" },
       }
 
+      -- Use the relaxed global config (style rules off) instead of the defaults.
+      local md = lint.linters["markdownlint-cli2"]
+      md.args = { "--config", vim.fn.stdpath("config") .. "/markdownlint.jsonc", "-" }
+
       vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
         group = vim.api.nvim_create_augroup("nvim_lint", { clear = true }),
         callback = function()

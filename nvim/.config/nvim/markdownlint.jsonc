@@ -1,0 +1,8 @@
+// Global markdownlint config, passed to markdownlint-cli2 by nvim-lint
+// (lua/plugins/editor.lua). Style rules are off; only real mistakes are flagged.
+// A project's own .markdownlint* file still layers on top of this.
+{
+  "default": false,
+  "MD011": true, // reversed link syntax: (text)[url]
+  "MD042": true  // empty link: [text]()
+}
