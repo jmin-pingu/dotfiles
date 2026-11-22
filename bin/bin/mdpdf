@@ -25,11 +25,56 @@ sed -e $'s/\x1b\\[[0-9;]*m//g' \
     -e '/^[[:space:]]*\\DeclareMathOperator\*\{0,1\}{[^}]*}{[^}]*}[[:space:]]*$/d' \
     -e 's/\\DeclareMathOperator\*\{0,1\}{[^}]*}{[^}]*}//g' "$md" > "$body"
 
+# Lua filter: (1) size table columns by their content instead of equal widths;
+# (2) let inline code break after _ / . - so long names wrap instead of
+# running into the next column.
+lua=$dir/mdpdf.lua
+cat > "$lua" <<'LUA'
+local function len(cell) return utf8.len(pandoc.utils.stringify(cell.contents)) or 0 end
+
+function Table(t)
+  local n, w = #t.colspecs, {}
+  for i = 1, n do w[i] = 3 end
+  local function scan(rows)
+    for _, r in ipairs(rows) do
+      for i, c in ipairs(r.cells) do
+        if i <= n then w[i] = math.max(w[i], math.min(len(c), 50)) end
+      end
+    end
+  end
+  scan(t.head.rows)
+  for _, b in ipairs(t.bodies) do scan(b.body) end
+  local total = 0
+  for i = 1, n do total = total + w[i] end
+  for i = 1, n do
+    -- Short tables: natural-width columns. Long ones: wrap, width ~ content.
+    t.colspecs[i][2] = total <= 72 and pandoc.ColWidthDefault or w[i] / total
+  end
+  return t
+end
+
+local esc = { ['\\'] = '\\textbackslash{}', ['{'] = '\\{', ['}'] = '\\}',
+  ['$'] = '\\$', ['&'] = '\\&', ['#'] = '\\#', ['%'] = '\\%', ['_'] = '\\_',
+  ['^'] = '\\^{}', ['~'] = '\\textasciitilde{}' }
+local brk = { ['_'] = true, ['/'] = true, ['.'] = true, ['-'] = true, [','] = true }
+
+function Code(c)
+  if not FORMAT:match('latex') then return nil end
+  local out = {}
+  for _, cp in utf8.codes(c.text) do
+    local ch = utf8.char(cp)
+    out[#out + 1] = esc[ch] or ch
+    if brk[ch] then out[#out + 1] = '\\allowbreak{}' end
+  end
+  return pandoc.RawInline('latex', '\\texttt{' .. table.concat(out) .. '}')
+end
+LUA
+
 if command -v pandoc >/dev/null; then pandoc=(pandoc)
 else pandoc=(nix shell nixpkgs#pandoc -c pandoc); fi
 
 "${pandoc[@]}" "$body" -f markdown -o "$out" \
-  --pdf-engine=xelatex -H "$hdr" \
+  --pdf-engine=xelatex -H "$hdr" --lua-filter="$lua" \
   --resource-path="$(dirname "$md")" \
   -V geometry:margin=1in -V colorlinks=true -V monofont=Menlo
 
