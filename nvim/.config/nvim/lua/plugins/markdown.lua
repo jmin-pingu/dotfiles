@@ -9,6 +9,8 @@ return {
       -- No heading styling: headings keep only normal syntax colours.
       -- Code blocks and the rest still render.
       heading = { enabled = false },
+      -- Leave LaTeX as raw source. Math is read in a PDF via <leader>mp.
+      latex = { enabled = false },
     },
   },
 }

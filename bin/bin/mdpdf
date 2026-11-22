@@ -1,0 +1,37 @@
+#!/bin/bash
+# mdpdf FILE.md [--no-open]
+# Render a Markdown file (with LaTeX math) to a temporary PDF and open it.
+# Same file -> same PDF path, so a viewer that auto-reloads picks up re-renders.
+set -euo pipefail
+
+md=${1:?usage: mdpdf FILE.md [--no-open]}
+[[ -f $md ]] || { echo "mdpdf: no such file: $md" >&2; exit 1; }
+md=$(cd "$(dirname "$md")" && pwd)/$(basename "$md")
+
+# Stable per-user temp dir (TMPDIR gets swapped inside nix shells).
+tmp=$(getconf DARWIN_USER_TEMP_DIR 2>/dev/null || echo "${TMPDIR:-/tmp}")
+dir=${tmp%/}/mdpdf
+mkdir -p "$dir"
+hash=$(printf '%s' "$md" | shasum | cut -c1-8)
+out=$dir/$(basename "${md%.*}")-$hash.pdf
+hdr=$dir/$hash-header.tex
+body=$dir/$hash-body.md
+
+# \DeclareMathOperator is only legal in the LaTeX preamble: move it there.
+{ echo '\usepackage{amsmath}'; grep -o '\\DeclareMathOperator\*\?{[^}]*}{[^}]*}' "$md" | sort -u || true; } > "$hdr"
+# Drop those lines from the body, and strip terminal colour codes (pasted
+# pytest output) that LaTeX can't typeset.
+sed -e $'s/\x1b\\[[0-9;]*m//g' \
+    -e '/^[[:space:]]*\\DeclareMathOperator\*\{0,1\}{[^}]*}{[^}]*}[[:space:]]*$/d' \
+    -e 's/\\DeclareMathOperator\*\{0,1\}{[^}]*}{[^}]*}//g' "$md" > "$body"
+
+if command -v pandoc >/dev/null; then pandoc=(pandoc)
+else pandoc=(nix shell nixpkgs#pandoc -c pandoc); fi
+
+"${pandoc[@]}" "$body" -f markdown -o "$out" \
+  --pdf-engine=xelatex -H "$hdr" \
+  --resource-path="$(dirname "$md")" \
+  -V geometry:margin=1in -V colorlinks=true -V monofont=Menlo
+
+[[ ${2:-} == --no-open ]] || open "$out"
+echo "$out"
