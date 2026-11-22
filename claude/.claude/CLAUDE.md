@@ -124,6 +124,8 @@ Treat it like a REPL for learning: small steps, run it, see what happens.
 - **Environment:** a Nix flake (`flake.nix` with a `devShell`) holding only what the lab needs. Pin it with `flake.lock`. Add `.envrc` with `use flake` so direnv loads it.
 - **Skeleton:** stubs with `TODO`s for the parts I write. Write only the scaffolding: imports, function signatures, data loading, plotting.
 - **Verifiable:** every lab has a check I can run that says pass or fail. Put the command in a `README.md`, and keep the README short: the goal, the steps, and how to check.
+- **Assignment write-up:** every lab has an `ASSIGNMENT.md`, written like a course homework handout (model: the CMU 10-714 `hw*/ASSIGNMENT.md` files). Split it into parts. Each part explains the idea and the math, shows the function signature with its docstring, says what to implement, and gives the command that tests that part. The README stays short and points to it.
+  - Write math in LaTeX that pandoc can build: `$…$` inline, `\begin{equation}` blocks (never wrapped in `$$`), no `\verb` in math, no terminal color codes. I read it as a PDF with `mdpdf` (`<leader>mp` in nvim). Run `mdpdf ASSIGNMENT.md --no-open` and fix any errors before handing it over.
 - **Dead ends:** the README has a `## Dead ends` section. When an approach fails, add one line: what I tried and why it failed.
 - **Fit the subject:**
   - Code (CS, systems, languages): unit tests that fail until I fill in the TODOs.
