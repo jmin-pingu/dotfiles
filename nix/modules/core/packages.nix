@@ -13,6 +13,7 @@
             yazi
             zsh-powerlevel10k
             tree-sitter                    # CLI: needed to build grammars like latex
+            python3Packages.pylatexenc     # latex2text: render-markdown.nvim shows LaTeX as unicode
 
             # languages
             lua
