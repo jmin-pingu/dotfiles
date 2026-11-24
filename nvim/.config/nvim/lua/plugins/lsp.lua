@@ -77,6 +77,14 @@ return {
         cmd = { "jdtls" },
       },
 
+      -- Bazel's compile_commands.json names a wrapper script (cc_wrapper.sh) as
+      -- the compiler. clangd asks the compiler where the std headers are, but
+      -- only for drivers on --query-driver's allow-list. Without it: "'stdexcept'
+      -- file not found". The project's .clangd swaps in the Nix clang++.
+      clangd = {
+        cmd = { "clangd", "--query-driver=/nix/store/**/clang*" },
+      },
+
       -- lspconfig's terraformls on_attach calls vim.lsp.codelens.enable(), which
       -- is nil on nvim 0.11.0 (added in a later patch), so every attach raised
       -- ON_ATTACH_ERROR. Override it until nvim is newer.
@@ -117,7 +125,7 @@ return {
     -- ~/.local/share/nvim/lazy/nvim-lspconfig/lsp/
     local plain = {
       -- c / c++ / objc / cuda (clangd covers all of them)
-      "clangd",
+      -- (clangd is in `overrides` above)
       -- js / jsx / ts / tsx
       "ts_ls",
       "eslint",
