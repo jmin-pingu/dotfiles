@@ -294,6 +294,9 @@ return {
         -- gd: the one navigation key 0.11 leaves out (it only wires <C-]>).
         bmap("n", "gd", vim.lsp.buf.definition, "Definition")
 
+        -- Rename. 0.11 binds it to grn; <leader>rn is the old coc.nvim key.
+        bmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
+
         -- Hover. The default is K, but keymaps.lua maps K to the 25k motion
         -- globally, and that wins here because we would otherwise be fighting
         -- our own config. To reclaim the standard key, delete the K mapping in
