@@ -10,16 +10,13 @@ local function claude_pane()
   end
 end
 
--- Ask Claude a question from nvim. In visual mode, the selection is sent
--- first (as an @-mention), so the question is about those lines.
-local function ask(visual)
+-- Ask Claude a question from nvim. Claude already sees your current
+-- selection through the IDE connection, so nothing is sent first.
+local function ask()
   local pane = claude_pane()
   if not pane then
     vim.notify("No Claude pane in this tmux window", vim.log.levels.WARN)
     return
-  end
-  if visual then
-    vim.cmd("ClaudeCodeSend")
   end
   vim.ui.input({ prompt = "Ask Claude: " }, function(q)
     if not q or q == "" then
@@ -43,8 +40,7 @@ return {
       terminal = { provider = "none" },
     },
     keys = {
-      { "<leader>aj", function() ask(false) end,       desc = "Claude: ask a question" },
-      { "<leader>aj", function() ask(true) end,        mode = "v", desc = "Claude: ask about selection" },
+      { "<leader>aj", ask, mode = { "n", "v" },        desc = "Claude: ask a question" },
       { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",      desc = "Claude: add current buffer" },
       { "<leader>as", "<cmd>ClaudeCodeSend<cr>",       mode = "v", desc = "Claude: send selection" },
       { "<leader>as", "<cmd>ClaudeCodeTreeAdd<cr>",    desc = "Claude: add file", ft = { "NvimTree" } },
