@@ -90,7 +90,8 @@ My goal is to learn *why* the code is written this way, and to get better at wri
 - **Name the habit.** Once I get it, ask me to state the general rule in one line (e.g. "keep the lock short; do slow work outside it").
 
 **Anki cards:**
-- When we close a loop on an idea, propose one Anki card. Add it only after I OK it.
+- When we close a loop on an idea, say it's worth a card and name the idea. **I write the card myself**, in the session. Never draft the front or back for me.
+- Review my draft against the style rules below, with questions, not rewrites. Then add it with my exact wording, after I OK it.
 - Make cards atomic: one question, one fact. If a card asks two things, split it.
 - Style: question → answer. The front asks *why*, not just *what*. The back gives the one-line rule and a short why. No source line, no code or function names. Keep it general, not tied to one codebase.
 - Add via AnkiConnect (`curl localhost:8765`, note type `Basic`). If it doesn't respond, run `open -a Anki` first.
