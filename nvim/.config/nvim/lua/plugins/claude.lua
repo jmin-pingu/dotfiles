@@ -43,8 +43,8 @@ return {
       terminal = { provider = "none" },
     },
     keys = {
-      { "<leader>j",  function() ask(false) end,       desc = "Claude: ask a question" },
-      { "<leader>j",  function() ask(true) end,        mode = "v", desc = "Claude: ask about selection" },
+      { "<leader>aj", function() ask(false) end,       desc = "Claude: ask a question" },
+      { "<leader>aj", function() ask(true) end,        mode = "v", desc = "Claude: ask about selection" },
       { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",      desc = "Claude: add current buffer" },
       { "<leader>as", "<cmd>ClaudeCodeSend<cr>",       mode = "v", desc = "Claude: send selection" },
       { "<leader>as", "<cmd>ClaudeCodeTreeAdd<cr>",    desc = "Claude: add file", ft = { "NvimTree" } },
