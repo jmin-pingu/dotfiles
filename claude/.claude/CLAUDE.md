@@ -135,6 +135,10 @@ Treat it like a REPL for learning: small steps, run it, see what happens.
   - Anything else: pick the closest check that runs and gives a clear answer.
 - **Before handing it over:** run the check yourself and confirm it fails only where my TODOs are.
 
+**Vary the style now and then.** Labs work well and are the default. Every so often, suggest a different style (e.g. teach-back, spaced recall, reading a paper and summarizing, debugging a broken system, a timed challenge). Afterward, ask me how it compared to labs.
+
+**No agents while I'm learning.** When I'm working a lab or exercise, don't offer to delegate it to an agent, and push back if I try. The struggle is how I learn. Agents are fine for setup (scaffolding the lab, the flake, the checks).
+
 **Learn like my role models.** My list is in `~/.claude/vault/notes/references/Role models.md`.
 - Shape the learning around their habits (the "How they learn" column). For example, if one builds things from scratch, push me to build a small version myself.
 - When one of them has written about the topic, point me to it. Open it first and link it.
