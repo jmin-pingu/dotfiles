@@ -1,3 +1,35 @@
+-- Find the Claude pane in this tmux window. Claude's process shows up as
+-- "claude" or as its version number (e.g. "2.1.331").
+local function claude_pane()
+  local lines = vim.fn.systemlist({ "tmux", "list-panes", "-F", "#{pane_id}\t#{pane_current_command}" })
+  for _, line in ipairs(lines) do
+    local id, cmd = line:match("^(%S+)\t(.*)$")
+    if id and id ~= vim.env.TMUX_PANE and (cmd == "claude" or cmd:match("^%d+%.%d+%.%d+$")) then
+      return id
+    end
+  end
+end
+
+-- Ask Claude a question from nvim. In visual mode, the selection is sent
+-- first (as an @-mention), so the question is about those lines.
+local function ask(visual)
+  local pane = claude_pane()
+  if not pane then
+    vim.notify("No Claude pane in this tmux window", vim.log.levels.WARN)
+    return
+  end
+  if visual then
+    vim.cmd("ClaudeCodeSend")
+  end
+  vim.ui.input({ prompt = "Ask Claude: " }, function(q)
+    if not q or q == "" then
+      return
+    end
+    vim.fn.system({ "tmux", "send-keys", "-t", pane, "-l", q })
+    vim.fn.system({ "tmux", "send-keys", "-t", pane, "Enter" })
+  end)
+end
+
 return {
   -- Claude Code IDE bridge. Claude runs in its own tmux pane, not inside
   -- nvim, so the terminal provider is "none": the plugin only runs the
@@ -11,6 +43,8 @@ return {
       terminal = { provider = "none" },
     },
     keys = {
+      { "<leader>j",  function() ask(false) end,       desc = "Claude: ask a question" },
+      { "<leader>j",  function() ask(true) end,        mode = "v", desc = "Claude: ask about selection" },
       { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",      desc = "Claude: add current buffer" },
       { "<leader>as", "<cmd>ClaudeCodeSend<cr>",       mode = "v", desc = "Claude: send selection" },
       { "<leader>as", "<cmd>ClaudeCodeTreeAdd<cr>",    desc = "Claude: add file", ft = { "NvimTree" } },
