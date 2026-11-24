@@ -10,13 +10,23 @@ local function claude_pane()
   end
 end
 
--- Ask Claude a question from nvim. Claude already sees your current
--- selection through the IDE connection, so nothing is sent first.
+-- Ask Claude a question from nvim. In visual mode, the selected lines are
+-- sent first as an @-mention. This calls the plugin's API directly, not
+-- :ClaudeCodeSend, because that command queues an <Esc> keypress that
+-- would cancel the question prompt.
 local function ask()
   local pane = claude_pane()
   if not pane then
     vim.notify("No Claude pane in this tmux window", vim.log.levels.WARN)
     return
+  end
+  local mode = vim.api.nvim_get_mode().mode
+  if mode == "v" or mode == "V" or mode == "\22" then
+    local l1, l2 = vim.fn.line("v"), vim.fn.line(".")
+    if l1 > l2 then l1, l2 = l2, l1 end
+    vim.cmd("normal! \27") -- leave visual mode now, not via queued keys
+    local file = vim.api.nvim_buf_get_name(0)
+    require("claudecode").send_at_mention(file, l1 - 1, l2 - 1, "ask") -- 0-indexed
   end
   vim.ui.input({ prompt = "Ask Claude: " }, function(q)
     if not q or q == "" then
